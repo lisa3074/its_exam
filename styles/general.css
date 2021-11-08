@@ -1,0 +1,286 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.bold {
+  font-weight: 900;
+}
+
+p,
+.url_decode {
+  font-size: 0.8rem;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.url_decode.admin {
+  padding-bottom: 0.5rem;
+}
+
+.sign_in_up {
+  padding-bottom: 1rem;
+}
+
+.url_decode {
+  color: #989ebe;
+}
+
+form p {
+  padding-bottom: 0;
+}
+
+.top_nav {
+  align-items: center;
+  background-color: #61697c;
+  padding: 0.8rem 1rem;
+}
+
+.top_nav p {
+  color: white;
+  font-weight: 700;
+}
+
+.top_nav button {
+  color: #61697c;
+  background-color: #fff;
+  margin-bottom: 0;
+}
+
+button {
+  appearance: none;
+  padding: 0.3rem 0.8rem;
+  border-radius: 5px;
+  border: 0;
+  box-shadow: 1px 1px 5px #61697caa;
+  background-color: #eceef4;
+  color: #303646;
+  font-weight: 900;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.admin_main,
+.signin,
+.signup {
+  padding: 1rem;
+}
+
+.admin_main {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+textarea {
+  width: 100%;
+  height: 3rem;
+  border-radius: 5px;
+  resize: none;
+  margin: 1rem 0;
+  padding: 1rem;
+}
+
+#comment {
+  height: 5rem;
+}
+
+.comment_wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.comment {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 1px 1px 10px #61697c55;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 20px 20px 20px 2px;
+  background-color: #3e507c36;
+  width: 100%;
+}
+
+.bold {
+  font-weight: 600;
+  font-style: italic;
+}
+
+.comment form {
+  margin-left: auto;
+}
+
+.comment button {
+  margin-bottom: 0;
+}
+
+/* 
+    .comment p:nth-child(2) {
+        padding: 1rem 0;
+    } */
+
+.comment p:nth-child(3) {
+  padding-bottom: 1rem;
+}
+
+.me {
+  justify-content: flex-end;
+  background-color: #fff;
+  /*  margin-left: auto; */
+  border-radius: 20px 20px 2px 20px;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 1rem;
+}
+
+.comment.question {
+  background-color: #32716d4a;
+}
+
+.heading {
+  padding-bottom: 1rem;
+}
+
+.signup,
+.signin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #eceef4;
+}
+
+.signup_form,
+.login_form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 10px #61697c55;
+  padding: 2rem;
+  background-color: #fff;
+}
+
+label {
+  width: 100%;
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  align-items: center;
+}
+
+label > input {
+  align-self: flex-end;
+  padding: 0.2rem 0.5rem;
+}
+
+input::placeholder {
+  font-size: 0.8rem;
+}
+
+li {
+  list-style: none;
+}
+
+nav.top_nav ul {
+  display: flex;
+  justify-content: flex-end;
+}
+nav.top_nav {
+  display: flex;
+  justify-content: flex-end;
+}
+nav.loggedIn {
+  display: flex;
+  justify-content: space-between;
+}
+
+nav li {
+  color: white;
+  padding-right: 1rem;
+  font-weight: 900;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+}
+.threads_wrapper {
+  padding: 1rem;
+}
+.profile_info,
+.user_questions,
+.latest_activity {
+  padding-bottom: 2rem;
+}
+
+.latest_activity,
+.user_questions,
+.threads {
+  padding: 1rem 1rem 0;
+  background-color: #63739c36;
+  box-shadow: 1px 1px 10px #61697c55;
+  border-radius: 5px;
+  margin-bottom: 2rem;
+}
+
+.user_questions {
+  background-color: #32716d4a;
+}
+.latest_activity h3,
+.user_questions h3,
+.threads h3 {
+  padding-bottom: 1rem;
+}
+.activity,
+.question_profile,
+.thread {
+  padding-bottom: 1rem;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #61697c55;
+  padding: 1rem 0;
+  border-radius: 5px;
+}
+
+.thread {
+  display: grid;
+}
+
+.activity button,
+.question_profile button {
+  margin-bottom: 0;
+}
+
+.thread .asked_by {
+  flex-basis: 300px;
+  flex-grow: 1;
+  padding: 0.5rem 0 0;
+}
+
+@media (min-width: 600px) {
+  .activity,
+  .question_profile,
+  .thread {
+    grid-template-columns: auto auto;
+  }
+  .thread .asked_by {
+    text-align: right;
+    padding: 0;
+  }
+}

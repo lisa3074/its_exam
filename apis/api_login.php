@@ -85,6 +85,7 @@ $logged = $user['logger'] + 1;
   $csrf = bin2hex(random_bytes(16));
   $_SESSION['email'] = $_POST['user_email'];
   $_SESSION['firstname'] = $user['firstname'];
+  $_SESSION['lastname'] = $user['lastname'];
   $_SESSION['uuid'] = $user['uuid'];
   //Set a session cookie with a random value to compare when posting a comment
    $_SESSION['csrf'] = $csrf;

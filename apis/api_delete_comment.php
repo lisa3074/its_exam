@@ -7,7 +7,7 @@ require_once(__DIR__.'/../db.php');
 
 
 if(!isset($_SESSION['uuid'])){
-    header('Location: /You need to log in');
+    header('Location: /login/You need to log in');
      exit();
 }
 if($user_id != $_SESSION['uuid']){

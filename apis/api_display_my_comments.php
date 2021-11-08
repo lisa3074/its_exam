@@ -1,19 +1,19 @@
 <?php
-/* if(!isset($_SESSION)){
-  require_once(__DIR__.'./../cookie_config.php');
-    session_start();
-} */
 require_once(__DIR__.'/../db.php');
 
+if(!isset($_SESSION)){
+  require_once(__DIR__.'./../cookie_config.php');
+    session_start();
+} 
+
 try{
-  //use view instead, to limit permission
-  $q = $db->prepare('SELECT * FROM display_comments
-                    WHERE thread_id = :thread_id
-                    ORDER BY comment_ts asc');
-$q->bindValue(':thread_id', $thread_id);
+     //use view instead, to limit permission
+   $q = $db->prepare('SELECT * FROM display_comments
+                    WHERE user_id = :uuid
+                    ORDER BY comment_ts desc');
+  $q->bindValue(':uuid', $_SESSION['uuid']);
   $q->execute();
   $comments = $q->fetchAll();
-
  
 
  //encrypting with CBC
@@ -25,7 +25,11 @@ for($i = 0; $i < count($comments); $i++){
     $comment=openssl_decrypt($comments[$i]['comment_text'], $alg, $key, 0, $comments[$i]['comment_iv']);
     array_push($decrypted_comments, $comment);
 } 
- 
+
+ if(!$comments){
+   echo "There's no comments yet. Go write the first one...";
+}  
+
 // exit(); 
 }catch(PDOException $ex){
   echo $ex;

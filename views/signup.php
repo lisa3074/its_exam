@@ -1,5 +1,6 @@
 <?php
-require_once(__DIR__.'/top.php');
+require_once(__DIR__.'/default_top.php');
+require_once(__DIR__.'/nav.php');
 
 ?>
 
@@ -37,7 +38,7 @@ require_once(__DIR__.'/top.php');
                 name="password" />
         </label>
         <button>Sign up</button>
-        <p>Go to <a href="/">log in</a></p>
+        <p>Go to <a href="/login">log in</a></p>
     </form>
 
 </main>

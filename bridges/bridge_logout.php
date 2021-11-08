@@ -1,3 +1,6 @@
 <?php
-session_destroy();
-header('Location: /login/You are now logged out');
+
+    session_start();
+    session_destroy();
+    header('Location: /login/You are now logged out');
+    exit();
