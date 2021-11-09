@@ -175,6 +175,10 @@ label {
   align-items: center;
 }
 
+label.is-invalid {
+  padding-bottom: 0.3rem;
+}
+
 label > input {
   align-self: flex-end;
   padding: 0.2rem 0.5rem;
@@ -240,6 +244,9 @@ nav a {
 .user_questions {
   background-color: #32716d4a;
 }
+.user_questions h4 {
+  padding-bottom: 0.3rem;
+}
 .latest_activity h3,
 .user_questions h3,
 .threads h3 {
@@ -249,7 +256,7 @@ nav a {
 .question_profile,
 .thread {
   padding-bottom: 1rem;
-  display: flex;
+  display: grid;
   width: 100%;
   justify-content: space-between;
   align-items: center;
@@ -260,6 +267,23 @@ nav a {
 
 .thread {
   display: grid;
+}
+
+.thread .question,
+.latest_activity .bold,
+.user_questions .bold {
+  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.user_questions .bold,
+.latest_activity .bold {
+  width: calc(100vw - 4rem);
+  padding-bottom: 0.2rem;
+}
+.user_questions button {
+  width: fit-content;
 }
 
 .activity button,
@@ -273,14 +297,79 @@ nav a {
   padding: 0.5rem 0 0;
 }
 
+.is-invalid input,
+.is-invalid textarea {
+  border: 1px solid red;
+}
+
+.invalid-feedback {
+  display: none;
+}
+
+.is-invalid + .invalid-feedback {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 0.875em;
+  color: #dc3545;
+}
+.thread_question textarea {
+  margin-bottom: 0;
+  height: 200px;
+}
+
+.hide {
+  display: none;
+}
+.form-check {
+  display: flex;
+}
+.form-check label {
+  padding-left: 0.5rem;
+}
+
+.form_wrapper.first p {
+  padding-bottom: 1rem;
+}
+.question_profile > div:nth-child(1),
+.activity > div:nth-child(1) {
+  padding-bottom: 0.5rem;
+}
 @media (min-width: 600px) {
   .activity,
   .question_profile,
   .thread {
     grid-template-columns: auto auto;
+    column-gap: 1rem;
   }
+  .activity {
+    grid-template-columns: 75vw auto;
+  }
+
   .thread .asked_by {
     text-align: right;
     padding: 0;
+  }
+  .thread .question {
+    white-space: nowrap;
+    padding-right: 1rem;
+  }
+  .user_questions .bold {
+    width: 62vw;
+    max-width: 600px;
+    padding-bottom: 0.1rem;
+  }
+  .latest_activity .bold {
+    width: 75vw;
+    max-width: 600px;
+    padding-bottom: 0.1rem;
+  }
+  .question_profile > div:nth-child(1),
+  .activity > div:nth-child(1) {
+    padding-bottom: 0rem;
+  }
+}
+@media (min-width: 900px) {
+  .activity {
+    grid-template-columns: 600px auto;
   }
 }

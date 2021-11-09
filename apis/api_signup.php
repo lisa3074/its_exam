@@ -7,13 +7,18 @@ if(!isset($_SESSION)){
   session_start();
 }
 
+//VALIDATION
  if( !$_POST['firstname'] ){
   header('Location: /signup/Fill out your first name');
   exit();  
 }
- if( !$_POST['lastname'] ){
-  header('Location: /signup/Fill out your last name');
-  exit();  
+
+//not organizer
+if($radiovalue == 3 || $radiovalue == 1){
+    if( ! isset($_POST['lastname']) || !$_POST['lastname'] ){
+    header('Location: /signup/You need to provide a last name.');
+    exit();  
+  }
 }
  if( !$_POST['user_email'] ){
   header('Location: /signup/Put in an email');
@@ -22,6 +27,35 @@ if(!isset($_SESSION)){
 
 if( ! filter_var($_POST['user_email'], FILTER_VALIDATE_EMAIL) ){
   header('Location: /signup/The email you entered was not an email (example: a@a.com)');
+  exit();  
+}
+
+if( !$_POST['password'] ){
+ header('Location: /signup/Put in a password');
+ exit();  
+}
+
+if( !$_POST['password_match'] ){
+ header('Location: /signup/Put in a matching password');
+ exit();  
+}
+
+ if( ! isset($_POST['firstname']) ){
+  header('Location: /signup/You need to provide a name');
+  exit();  
+}
+ if( ! isset($_POST['user_email']) ){
+  header('Location: /signup/You need to provide a valid email.');
+  exit();  
+}
+
+if( ! isset($_POST['password']) ){
+  header('Location: /signup/You need to provide a password.');
+  exit();  
+}
+
+if( ! isset($_POST['password_match']) ){
+  header('Location: /signup/You need to provide a matching password.');
   exit();  
 }
 
@@ -50,6 +84,14 @@ if( $password_length < 8 or $password_length > 32 ){
   exit();  
 } 
 
+$radiovalue = $_POST['account'];
+//Admin
+ if( $radiovalue == 3 && $_POST['key'] != 12345 ){
+  header('Location: /signup/You\'ve entered a wrong admin key. Try again or choose another account type.');
+  exit();
+}
+
+
 if( !$_POST['password'] ){
   header('Location: /signup/Put in a password');
   exit();  
@@ -60,18 +102,30 @@ if(!preg_match($pattern, $subject)){
 header('Location: /signup/You need a password between 8 - 32 charachters, at least one uppercase, one lowercase, one number and one special character.');
 exit();
 }
+if( $_POST['password'] != $_POST['password_match']){
+  header('Location: /signup/The two passwords does not match.');
+  exit();  
+} 
 
     //declare a salt that is hashed and store it in the database. This salt is unique for this user
     $salt = hash("sha256",base64_encode(openssl_random_pseudo_bytes(10)));
     $currentTime = time(); //timestamp
  try{
-  $q = $db->prepare("INSERT INTO user (firstname, lastname, email, password, salt, uuid, logger, logged_time) values (:firstname, :lastname, :email, :password, :salt, :uuid, 0, $currentTime)");
+  $q = $db->prepare("INSERT INTO user (firstname, lastname, email, password, salt, uuid, logger, logged_time, privilige, user_blocked) values (:firstname, :lastname, :email, :password, :salt, :uuid, 0, $currentTime, :privilige, :user_blocked)");
   $q->bindValue(':firstname', $_POST['firstname']);
   $q->bindValue(':lastname', $_POST['lastname']);
   $q->bindValue(':email', strtolower($_POST['user_email']));
   $q->bindValue(':password', hash("sha256", $_POST['password']));
   $q->bindValue(':salt',hash("sha256", $salt));
   $q->bindValue(':uuid', bin2hex(random_bytes(16)));
+  $q->bindValue(':user_blocked', 0);
+   if( $radiovalue == 3 && $_POST['key'] == 12345 ){
+    $q->bindValue(':privilige', 3);
+  }else if($radiovalue == 2 ){
+    $q->bindValue(':privilige', 2);
+  }else if($radiovalue == 1 ){
+    $q->bindValue(':privilige', 1);
+  }
   $q->execute();
 
  

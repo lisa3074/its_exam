@@ -26,10 +26,6 @@ for($i = 0; $i < count($comments); $i++){
     array_push($decrypted_comments, $comment);
 } 
 
- if(!$comments){
-   echo "There's no comments yet. Go write the first one...";
-}  
-
 // exit(); 
 }catch(PDOException $ex){
   echo $ex;
