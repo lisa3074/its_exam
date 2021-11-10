@@ -8,6 +8,10 @@ if (!isset($_SESSION)) {
     require_once(__DIR__ . './../cookie_config.php');
     session_start();
 }
+if(!isset($_SESSION['uuid'])){
+    header('Location: /event/error/You are not logged in. Please login to view your profile.');
+    exit();
+}
 try {
     $q = $db->prepare('SELECT * FROM user WHERE uuid = :uuid LIMIT 1');
     $q->bindValue(':uuid', $_SESSION['uuid']);

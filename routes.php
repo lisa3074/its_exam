@@ -7,6 +7,10 @@ get('/', function () {
    require_once(__DIR__ . '/views/events.php');
 });
 
+get('/event/error/:display_message', function ($display_message) {
+   require_once(__DIR__ . '/views/events.php');
+});
+
 
 ##############################
 ##############################
@@ -42,6 +46,14 @@ get('/posts/:thread_id/:display_message', function ($thread_id, $display_message
 get('/events/:category', function ($category) {
    require_once(__DIR__ . '/views/events.php');
    require_once(__DIR__ . '/apis/api_display_events.php');
+});
+get('/events/event/:event_id', function ($event_id) {
+   require_once(__DIR__ . '/views/events.php');
+   
+});
+get('/events/succes/:display_message', function ($display_message) {
+   require_once(__DIR__ . '/views/events.php');
+   
 });
 
 get('/index/:display_error', function ($display_error) {
@@ -115,6 +127,9 @@ post('/show_note', function () {
 post('/forum', function () {
    require_once(__DIR__ . '/views/forum.php');
    require_once(__DIR__ . '/apis/api_post_thread.php');
+});
+post('/events', function () {
+   require_once(__DIR__ . '/apis/api_add_event.php');
 });
 
 get('/error', function () {
