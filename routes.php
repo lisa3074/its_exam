@@ -92,8 +92,12 @@ post('/signup', function () {
    require_once(__DIR__ . '/apis/api_signup.php');
 });
 post('/admin', function () {
+   //require_once(__DIR__ . '/apis/api_upload_file.php');
+   require_once(__DIR__ . '/apis/api_update_user.php');
+   require_once(__DIR__ . '/views/admin.php');
+});
+post('/admin/image/:user_id', function ($user_id) {
    require_once(__DIR__ . '/apis/api_upload_file.php');
-   // require_once(__DIR__ . '/apis/api_update_user.php');
    //require_once(__DIR__ . '/views/admin.php');
 });
 post('/posts/comment/:thread_id', function ($thread_id) {

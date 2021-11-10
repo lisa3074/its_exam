@@ -8,10 +8,8 @@ try {
     $q->bindValue(':user_image', $random_number . '.' . $extension);
     $q->execute();
 
-    /*       if (isset($img)) {
-                    header('Location: /admin/Your picture was updated!');
-                    exit();
-                } */
+    header('Location: /admin/Your picture was updated!');
+    exit();
 } catch (PDOException $ex) {
     http_response_code(400);
     echo $ex;

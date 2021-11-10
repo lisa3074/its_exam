@@ -80,7 +80,6 @@ try {
         $q->execute();
     }
 
-    // require_once(__DIR__ . '/api_upload_file.php');
     header('Location: /admin/You have edited your profile!');
     exit();
 } catch (PDOException $ex) {

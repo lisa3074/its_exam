@@ -24,90 +24,122 @@ try {
 
 ?>
 
+<!-- MAIN PAGE -->
 <main class="admin_main">
 
-    <?php
-    if (isset($display_message)) { ?>
-    <p class="url_decode admin">
-        <?php
-        // Use out to sanitize the read from the db, to prevent XXS 
-        echo out(urldecode($display_message));
-    } ?>
-    </p>
-    <?php
+    <article class="user_container">
 
-        if (isset($note)) {
-        ?>
-    <p>Saved note:
+        <!-- IMAGE -->
+        <div class="profile_picture <?= $user['privilige'] == '2' ? 'organizer' : 'user_admin' ?>">
+            <label for="fileToUpload"
+                title="Click to edit your profile picture">
+                <img class="previewImg"
+                    data-src="/uploads/<?= $user['user_image'] ?>"
+                    src="/uploads/<?= $user['user_image'] ?>"></label>
+            <label class="submit_image hide <?= $user['privilige'] == '2' ? 'organizer' : 'user_admin' ?>"
+                for="submit_image">
+                <div class="save"><img src="/static/images/save_black_24dp.svg"></div>
+            </label>
+            <div class="submit_image cancel hide <?= $user['privilige'] == '2' ? 'organizer' : 'user_admin' ?>"
+                data-type="cancel">
+                <img src="/static/images/close_black_24dp.svg">
+            </div>
+        </div>
+
         <?php
-            echo urldecode($note);
+        if (isset($display_message)) { ?>
+        <p class="url_decode admin">
+            <?php
+            echo urldecode($display_message);
         } ?>
-    </p>
-
-    <article class="profile_info">
-        <h3>Profile information:</h3>
-        <p class="display-6">Name: <?= $user['firstname'] ?> <?= $user['lastname'] ?> </p>
-        <p class="text-muted links">
-            <a href="mailto:<?= $user['email'] ?>"><?= $user['email'] ?></a>
-            <?php if ($user['user_link']) { ?> |
-            <a href="http://<?= $user['user_link'] ?>"
-                target="_blank"><?= $user['user_link'] ?></a><?php } ?>
         </p>
+        <!-- HIDDEN FILE INPUT IMAGE -->
+        <form action="/admin/image/<?= $user['uuid'] ?>"
+            method="post"
+            class="hide"
+            enctype="multipart/form-data">
 
-        <p>Image: <?= $user['user_image'] ?></p>
-        <p>Description: <?= $user['user_description'] ?></p>
+            <!-- Check for client side request forgery -->
+            <input type="hidden"
+                name="csrf"
+                value=<?= $_SESSION['csrf'] ?>>
 
-    </article>
+            <label for="fileToUpload"></label>
+            <input type="file"
+                name="fileToUpload"
+                id="fileToUpload"
+                onchange="preview()">
+
+            <input type="submit"
+                name="submit"
+                class="hide"
+                id="submit_image"></input>
+        </form>
+
+        <!-- EDIT PROFILE -->
+        <article class="edit_profile hide">
+            <?php require_once(__DIR__ . '/edit_profile.php') ?>
+        </article>
 
 
+        <!-- PROFILE INFO -->
+        <div class="user_info <?= $user['privilige'] == '2' ? 'organizer' : 'user_admin' ?>">
+            <div class="flex_heading">
+                <p class="profile_name"><?= out($user['firstname']) ?> <?= out($user['lastname']) ?> </p>
+                <button class="toggle_profile_edit"
+                    onclick="editProfile()">Edit profile</button>
+            </div>
+            <p class="text-muted links">
+                <a href="mailto:<?= out($user['email']) ?>"><?= out($user['email']) ?></a>
+                <?php if ($user['user_link']) { ?> |
+                <a href="http://<?= out($user['user_link']) ?>"
+                    target="_blank"><?= out($user['user_link']) ?></a><?php } ?>
+            </p>
+            <p class="profile_desc"><?= out($user['user_description']) ?></p>
+        </div>
 
-    <button class="toggle_profile_edit"
-        onclick="toggleProfileEdit()">Edit profile</button>
-
-    <article class="edit_profile">
-        <?php require_once(__DIR__ . '/edit_profile.php') ?>
     </article>
 
     <?php
-            if (isset($_SESSION['uuid']) && $_SESSION['privilige'] != '2') {
-            ?>
+    if (isset($_SESSION['uuid']) && $_SESSION['privilige'] != '2') {
+    ?>
     <article class="user_questions">
         <h3>Active questions in the forum</h3>
         <?php
-                    if (!$threads) {
-                        echo '<article class="question_profile">
+            if (!$threads) {
+                echo '<article class="question_profile">
             <p>You have no questions yet.</p>
             </article>';
-                    }
-                    foreach ($threads as $thread) {
-                    ?>
+            }
+            foreach ($threads as $thread) {
+            ?>
         <article class="question_profile"
             onclick="setComments(<?= $thread['thread_id']  ?>)">
             <div>
-                <p class="bold"><?= $thread['thread_name'] ?></p>
+                <p class="bold"><?= out($thread['thread_name']) ?></p>
                 <p>Asked <?= $thread['thread_time'] ?></p>
             </div>
             <button>Mark as answered</button>
         </article>
         <?php
-                    }
-                    ?>
+            }
+            ?>
     </article>
 
 
     <article class="latest_activity">
         <h3>Latest commments</h3>
         <?php
-                    if (!$comments) {
-                        echo '<article class="activity">
+            if (!$comments) {
+                echo '<article class="activity">
                                 <p>You have no comments yet.</p>
                                 </article>';
-                    }
-                    foreach ($comments as $key => $comment) {
-                        if (isset($_SESSION['uuid'])) {
-                            $isMe = $comment['user_id'] == $_SESSION['uuid'];
-                        }
-                    ?>
+            }
+            foreach ($comments as $key => $comment) {
+                if (isset($_SESSION['uuid'])) {
+                    $isMe = $comment['user_id'] == $_SESSION['uuid'];
+                }
+            ?>
         <article onclick="goToComment(<?= $comment['thread_id'] ?>)"
             class="activity">
             <div>
@@ -117,10 +149,10 @@ try {
             <?= $isMe ? "<form action='/admin/delete/{$comment['comment_id']}/{$comment['user_id']}' method='POST'><button>Delete</button></form>" : '' ?>
         </article>
         <?php
-                    }
-                }
+            }
+        }
 
-                ?>
+        ?>
     </article>
 
 </main>
@@ -136,14 +168,15 @@ function goToComment(threadId) {
     window.location.href = `/posts/${threadId}`;
 }
 
-function toggleProfileEdit() {
-    console.log("toggleProfileEdit")
-    const button = document.querySelector(".toggle_profile_edit");
-    if (button.textContent === "Edit profile") {
-        button.textContent = "Close Edit profile";
-    } else {
-        button.textContent = "Edit profile";
-    }
+function editProfile() {
+    console.log("editProfile")
+    document.querySelector(".edit_profile").classList.remove("hide");
+    document.querySelector(".user_info").classList.add("hide");
+}
+
+function showProfile() {
+    document.querySelector(".edit_profile").classList.add("hide");
+    document.querySelector(".user_info").classList.remove("hide");
 }
 </script>
 

@@ -16,8 +16,7 @@ require_once(__DIR__ . '/../apis/api_display_threads.php');
     if (isset($display_message)) { ?>
     <p class="url_decode admin">
         <?php
-        // Use out to sanitize the read from the db, to prevent XXS 
-        echo out(urldecode($display_message));
+        echo urldecode($display_message);
     } ?>
     </p>
     <section class="threads">
@@ -29,8 +28,8 @@ require_once(__DIR__ . '/../apis/api_display_threads.php');
                 ?>
             <article class="thread"
                 onclick="setComments('<?= $thread['thread_id'] ?>')">
-                <p class="bold question"><?= $thread['thread_name'] ?></p>
-                <p class="asked_by">Asked by: <?= $thread['firstname'] ?> <?= $thread['lastname'] ?></p>
+                <p class="bold question"><?= out($thread['thread_name']) ?></p>
+                <p class="asked_by">Asked by: <?= out($thread['firstname']) ?> <?= out($thread['lastname']) ?></p>
             </article>
             <?php
                 }

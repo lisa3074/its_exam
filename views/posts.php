@@ -17,7 +17,7 @@ if (!isset($_SESSION)) {
     <p class="url_decode admin">
         <?php
         // Use out to sanitize the read from the db, to prevent XXS 
-        echo out(urldecode($display_message));
+        echo urldecode($display_message);
     } ?>
     </p>
     <button onclick="history.back()">Back</button>
@@ -38,7 +38,7 @@ if (!isset($_SESSION)) {
                     <h4>
                         <!-- Make only logged in users able to visit other profiles (not event organizers) -->
                         <?= isset($_SESSION['uuid']) ? ($_SESSION['privilige'] != '2' ? "<a href='/user/$user_id'>" : '<a>') : '<a>' ?>
-                        <?= $isMe ? 'You' : $comment['firstname'] . ' ' . $comment['lastname']; ?>
+                        <?= $isMe ? 'You' : out($comment['firstname']) . ' ' . out($comment['lastname']); ?>
                         </a>
 
                     </h4>

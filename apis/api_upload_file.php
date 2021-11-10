@@ -9,6 +9,17 @@ if (!isset($_SESSION['uuid'])) {
     exit();
 }
 
+
+/* Compare if the session cookie is the same as the value of the hidden input field */
+if (!isset($_SESSION['csrf']) || !isset($_POST['csrf'])) {
+    header('Location: /admin/You are not validated to edit the profile. Please log in again.');
+    exit();
+}
+if (!$_POST['csrf'] == $_SESSION['csrf']) {
+    header('Location: /admin/You are not validated to edit the profile. Please log in again.');
+    exit();
+}
+
 if (!isset($_FILES['fileToUpload'])) {
     echo 'there\'s no file set';
     exit();

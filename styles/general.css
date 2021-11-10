@@ -4,7 +4,9 @@
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
-
+.submit_image{
+  display: flex;
+}
 .bold {
   font-weight: 900;
 }
@@ -17,6 +19,7 @@ p,
 
 .url_decode.admin {
   padding-bottom: 0.5rem;
+ 
 }
 
 .sign_in_up {
@@ -334,6 +337,99 @@ nav a {
 .activity > div:nth-child(1) {
   padding-bottom: 0.5rem;
 }
+.profile_picture.organizer{
+  height: 400px;
+}
+
+.profile_picture.organizer .previewImg{
+width: 100vw;
+height: 400px;
+object-fit: cover;
+object-position: center;
+position: absolute;
+left: 0;
+top: 47px;
+
+}
+.profile_picture .previewImg{
+width: 300px;
+height: 400px;
+object-fit: cover;
+}
+
+.user_container{
+  margin-bottom: 1rem;
+}
+
+.profile_name{
+  font-size: 22px;
+  padding-right: 1rem;
+}
+
+.user_info{
+  line-height: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.text-muted a{
+  color: gray;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+#description{
+  height: 300px;
+  margin-top: 0.5rem;
+   border: 0px solid #989ebe;
+   box-shadow: 0px 0px 6px #90939baa;
+}
+
+.profile_desc{
+  white-space: pre-wrap;
+  padding: 1rem 0 2rem;
+}
+
+.edit_profile .flex_inputs{
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit_profile label{
+  display: block;
+}
+
+.edit_profile input{
+  margin-top: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #989ebe;
+     border: 0px solid #989ebe;
+   box-shadow: 0px 0px 6px #90939baa;
+}
+
+.flex_heading{
+  display: flex;
+  padding-top: 1rem;
+}
+.save{
+  display: flex;
+}
+.submit_image.organizer.cancel, .submit_image.organizer .save{
+  position: absolute;
+  background-color: white;
+  width: 50px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  top: 390px;
+}
+.submit_image.organizer .save{
+  right: 3.5rem;
+}
+.submit_image.organizer.cancel{
+  right: 1rem;
+}
+
 @media (min-width: 600px) {
   .activity,
   .question_profile,

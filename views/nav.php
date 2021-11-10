@@ -12,7 +12,7 @@
         <?php
         //Only show greeting if user is logged in.
         if (isset($_SESSION['uuid'])) {
-            echo "<p><a href='/admin'>Welcome back {$_SESSION['firstname']}</a></p>";
+            echo "<p><a href='/admin'>{$_SESSION['firstname']} | PROFILE</a></p>";
         }
         ?>
         <div class="navigation">
