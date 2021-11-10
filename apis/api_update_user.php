@@ -55,6 +55,7 @@ if (!preg_match($link_pattern, $subject)) {
 
 try {
     if ($_SESSION['privilige'] != '2') {
+        echo 'user_admin';
         $q = $db->prepare("UPDATE user 
         SET 
         firstname = :firstname, 
@@ -65,20 +66,20 @@ try {
         WHERE uuid = :uuid");
         $q->bindValue(':lastname', $_POST['lastname']);
     } else {
-
+        echo 'organizer';
         $q = $db->prepare("UPDATE user SET 
         firstname = :firstname, 
         email = :email, 
         user_description = :user_description, 
         user_link = :user_link 
         WHERE uuid = :uuid");
-        $q->bindValue(':firstname', $_POST['firstname']);
-        $q->bindValue(':email', strtolower($_POST['user_email']));
-        $q->bindValue(':user_description', $_POST['description']);
-        $q->bindValue(':user_link', $_POST['link']);
-        $q->bindValue(':uuid', $_SESSION['uuid']);
-        $q->execute();
     }
+    $q->bindValue(':firstname', $_POST['firstname']);
+    $q->bindValue(':email', strtolower($_POST['user_email']));
+    $q->bindValue(':user_description', $_POST['description']);
+    $q->bindValue(':user_link', $_POST['link']);
+    $q->bindValue(':uuid', $_SESSION['uuid']);
+    $q->execute();
 
     header('Location: /admin/You have edited your profile!');
     exit();

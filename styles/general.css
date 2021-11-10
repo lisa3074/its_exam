@@ -4,7 +4,7 @@
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
-.submit_image{
+.submit_image {
   display: flex;
 }
 .bold {
@@ -19,7 +19,6 @@ p,
 
 .url_decode.admin {
   padding-bottom: 0.5rem;
- 
 }
 
 .sign_in_up {
@@ -241,7 +240,7 @@ nav a {
   background-color: #63739c36;
   box-shadow: 1px 1px 10px #61697c55;
   border-radius: 5px;
-  margin-bottom: 2rem;
+  margin-top: 2rem;
 }
 
 .user_questions {
@@ -337,83 +336,96 @@ nav a {
 .activity > div:nth-child(1) {
   padding-bottom: 0.5rem;
 }
-.profile_picture.organizer{
+.profile_picture.organizer {
   height: 400px;
 }
 
-.profile_picture.organizer .previewImg{
-width: 100vw;
-height: 400px;
-object-fit: cover;
-object-position: center;
-position: absolute;
-left: 0;
-top: 47px;
-
+.profile_picture.organizer .previewImg {
+  width: 100vw;
+  height: 400px;
+  object-fit: cover;
+  object-position: center;
+  position: absolute;
+  left: 0;
+  top: 47px;
 }
-.profile_picture .previewImg{
-width: 300px;
-height: 400px;
-object-fit: cover;
+.profile_picture .previewImg {
+  width: 100%;
+  height: 400px;
+
+  object-fit: cover;
+}
+.profile_picture.user_admin > label {
+  width: 100%;
 }
 
-.user_container{
-  margin-bottom: 1rem;
+.user_container {
+  /* margin-bottom: 1rem; */
 }
 
-.profile_name{
+.profile_name {
   font-size: 22px;
   padding-right: 1rem;
 }
 
-.user_info{
+.user_info {
   line-height: 1.5rem;
   margin-bottom: 1rem;
 }
 
-.text-muted a{
+.text-muted a {
   color: gray;
   text-decoration: none;
   font-size: 0.9rem;
 }
 
-#description{
+.text-muted.links {
+  padding-bottom: 1rem;
+}
+
+#description {
   height: 300px;
   margin-top: 0.5rem;
-   border: 0px solid #989ebe;
-   box-shadow: 0px 0px 6px #90939baa;
+  border: 0px solid #989ebe;
+  box-shadow: 0px 0px 6px #90939baa;
 }
 
-.profile_desc{
+.profile_desc {
   white-space: pre-wrap;
-  padding: 1rem 0 2rem;
+  padding: 0;
 }
 
-.edit_profile .flex_inputs{
+.edit_profile .flex_inputs {
   display: flex;
   justify-content: space-between;
 }
 
-.edit_profile label{
+.edit_profile label {
   display: block;
 }
 
-.edit_profile input{
+.edit_profile input {
   margin-top: 0.5rem;
   border-radius: 5px;
   border: 1px solid #989ebe;
-     border: 0px solid #989ebe;
-   box-shadow: 0px 0px 6px #90939baa;
+  border: 0px solid #989ebe;
+  box-shadow: 0px 0px 6px #90939baa;
 }
 
-.flex_heading{
-  display: flex;
+.flex_heading {
   padding-top: 1rem;
 }
-.save{
+.flex_heading button {
+  margin-top: 1rem;
+}
+.save {
   display: flex;
 }
-.submit_image.organizer.cancel, .submit_image.organizer .save{
+.icon_wrapper.user_admin {
+  position: relative;
+}
+.submit_image.cancel,
+.submit_image .save {
   position: absolute;
   background-color: white;
   width: 50px;
@@ -421,13 +433,31 @@ object-fit: cover;
   justify-content: center;
   align-items: center;
   border-radius: 5px;
+  top: -4.5rem;
+}
+.submit_image.organizer .save {
   top: 390px;
-}
-.submit_image.organizer .save{
   right: 3.5rem;
+  position: absolute;
 }
-.submit_image.organizer.cancel{
+.submit_image.organizer.cancel {
+  top: 390px;
   right: 1rem;
+  position: absolute;
+}
+.submit_image .save {
+  left: 3.5rem;
+}
+.submit_image.cancel {
+  left: 1rem;
+}
+.submit_image.user_admin {
+  padding: 0;
+}
+.user_admin .profile_desc {
+  max-height: 200px;
+  overflow: scroll;
+  /*   margin-bottom: 3rem; */
 }
 
 @media (min-width: 600px) {
@@ -462,6 +492,76 @@ object-fit: cover;
   .question_profile > div:nth-child(1),
   .activity > div:nth-child(1) {
     padding-bottom: 0rem;
+  }
+
+  .flex_heading {
+    display: flex;
+    padding-top: 1rem;
+  }
+  .flex_heading button {
+    margin-top: 0;
+  }
+}
+@media (min-width: 700px) {
+  .profile_picture .previewImg {
+    width: 300px;
+    height: 400px;
+    border-radius: 5px;
+    object-fit: cover;
+  }
+  .profile_picture.user_admin > label {
+    width: 300px;
+  }
+  main.user_admin {
+    display: grid;
+    grid-template-columns: 300px auto;
+    grid-template-rows: 400px auto auto;
+    column-gap: 2rem;
+    grid-template-areas:
+      "pic desc"
+      "question question"
+      "comment comment";
+  }
+
+  .profile_picture.user_admin {
+    grid-area: pic;
+  }
+
+  .user_info.user_admin {
+    grid-area: desc;
+  }
+
+  .user_admin .user_questions {
+    grid-area: question;
+  }
+  .user_admin .latest_activity {
+    grid-area: comment;
+  }
+  .user_admin .flex_heading {
+    display: block;
+    padding-top: 1rem;
+  }
+  .user_admin .flex_heading button {
+    margin-top: 1rem;
+  }
+
+  .user_admin label {
+    padding: 0;
+  }
+  .user_admin .profile_desc {
+    max-height: 240px;
+  }
+}
+@media (min-width: 800px) {
+  .user_admin .flex_heading {
+    display: flex;
+    padding-top: 1rem;
+  }
+  .user_admin .flex_heading button {
+    margin-top: 0;
+  }
+  .user_admin .profile_desc {
+    max-height: 280px;
   }
 }
 @media (min-width: 900px) {

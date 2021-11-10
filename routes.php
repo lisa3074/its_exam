@@ -92,7 +92,6 @@ post('/signup', function () {
    require_once(__DIR__ . '/apis/api_signup.php');
 });
 post('/admin', function () {
-   //require_once(__DIR__ . '/apis/api_upload_file.php');
    require_once(__DIR__ . '/apis/api_update_user.php');
    require_once(__DIR__ . '/views/admin.php');
 });

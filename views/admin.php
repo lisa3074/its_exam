@@ -25,17 +25,18 @@ try {
 ?>
 
 <!-- MAIN PAGE -->
-<main class="admin_main">
+<main class="admin_main <?= $user['privilige'] != '2' ? 'user_admin' : '' ?>">
 
-    <article class="user_container">
 
-        <!-- IMAGE -->
-        <div class="profile_picture <?= $user['privilige'] == '2' ? 'organizer' : 'user_admin' ?>">
-            <label for="fileToUpload"
-                title="Click to edit your profile picture">
-                <img class="previewImg"
-                    data-src="/uploads/<?= $user['user_image'] ?>"
-                    src="/uploads/<?= $user['user_image'] ?>"></label>
+
+    <!-- IMAGE -->
+    <div class="profile_picture <?= $user['privilige'] == '2' ? 'organizer' : 'user_admin' ?>">
+        <label for="fileToUpload"
+            title="Click to edit your profile picture">
+            <img class="previewImg"
+                data-src="/uploads/<?= $user['user_image'] ?>"
+                src="/uploads/<?= $user['user_image'] ?>"></label>
+        <div class="icon_wrapper <?= $user['privilige'] == '2' ? '' : 'user_admin' ?>">
             <label class="submit_image hide <?= $user['privilige'] == '2' ? 'organizer' : 'user_admin' ?>"
                 for="submit_image">
                 <div class="save"><img src="/static/images/save_black_24dp.svg"></div>
@@ -45,6 +46,38 @@ try {
                 <img src="/static/images/close_black_24dp.svg">
             </div>
         </div>
+    </div>
+
+
+    <!-- HIDDEN FILE INPUT IMAGE -->
+    <form action="/admin/image/<?= $user['uuid'] ?>"
+        method="post"
+        class="hide"
+        enctype="multipart/form-data">
+
+        <!-- Check for client side request forgery -->
+        <input type="hidden"
+            name="csrf"
+            value=<?= $_SESSION['csrf'] ?>>
+
+        <label for="fileToUpload"></label>
+        <input type="file"
+            name="fileToUpload"
+            id="fileToUpload"
+            onchange="preview()">
+
+        <input type="submit"
+            name="submit"
+            class="hide"
+            id="submit_image"></input>
+    </form>
+
+    <!-- EDIT PROFILE -->
+    <article class="edit_profile hide">
+        <?php require_once(__DIR__ . '/edit_profile.php') ?>
+    </article>
+
+    <article class="user_container">
 
         <?php
         if (isset($display_message)) { ?>
@@ -53,35 +86,6 @@ try {
             echo urldecode($display_message);
         } ?>
         </p>
-        <!-- HIDDEN FILE INPUT IMAGE -->
-        <form action="/admin/image/<?= $user['uuid'] ?>"
-            method="post"
-            class="hide"
-            enctype="multipart/form-data">
-
-            <!-- Check for client side request forgery -->
-            <input type="hidden"
-                name="csrf"
-                value=<?= $_SESSION['csrf'] ?>>
-
-            <label for="fileToUpload"></label>
-            <input type="file"
-                name="fileToUpload"
-                id="fileToUpload"
-                onchange="preview()">
-
-            <input type="submit"
-                name="submit"
-                class="hide"
-                id="submit_image"></input>
-        </form>
-
-        <!-- EDIT PROFILE -->
-        <article class="edit_profile hide">
-            <?php require_once(__DIR__ . '/edit_profile.php') ?>
-        </article>
-
-
         <!-- PROFILE INFO -->
         <div class="user_info <?= $user['privilige'] == '2' ? 'organizer' : 'user_admin' ?>">
             <div class="flex_heading">
@@ -95,7 +99,8 @@ try {
                 <a href="http://<?= out($user['user_link']) ?>"
                     target="_blank"><?= out($user['user_link']) ?></a><?php } ?>
             </p>
-            <p class="profile_desc"><?= out($user['user_description']) ?></p>
+            <p class="profile_desc"><?= $user['user_description'] == '' ? 'Write a description others can read...' : out($user['user_description']) ?>
+            </p>
         </div>
 
     </article>
@@ -172,11 +177,15 @@ function editProfile() {
     console.log("editProfile")
     document.querySelector(".edit_profile").classList.remove("hide");
     document.querySelector(".user_info").classList.add("hide");
+    document.querySelector(".close_cancel_btn").textContent = 'Cancel';
 }
 
 function showProfile() {
-    document.querySelector(".edit_profile").classList.add("hide");
-    document.querySelector(".user_info").classList.remove("hide");
+    location.reload()
+}
+
+function changeBtnText() {
+    document.querySelector("#description").textContent = 'Close edit';
 }
 </script>
 

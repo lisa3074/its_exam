@@ -36,14 +36,14 @@
                 placeholder='Ex. Smith'
                 name='lastname'
                 id='lastname'
-                value='out({$user['lastname']})'
-                data-validate='str'
-                data-min='2'
-                data-max='30'
-                onkeyup='clear_parent_error(this)' />
+                value='{$user['lastname']}'
+        data-validate='str'
+        data-min='2'
+        data-max='30'
+        onkeyup='clear_parent_error(this)' />
         </label>
         <div class='invalid-feedback'>
-           Characters: min 2, max 30.
+            Characters: min 2, max 30.
         </div>
     </div>"
             : ''
@@ -83,15 +83,24 @@
         </div>
     </div>
     <!-- USER DESCRIPTION -->
+    <!-- Organizers can put as long description they want, users and admins only up to 300 ch -->
     <div class="description">
         <label>
-            <p>Description</p>
+            <p>Description <?= $user['privilige'] != '2' ? '(max 3500 characters)' : '' ?></p>
             <textarea placeholder="Add a description to mae your profile stand out"
+                data-validate="<?= $user['privilige'] != '2' ? 'str' : '' ?>"
+                data-max="3500"
+                data-min="0"
                 name="description"
-                id="description"><?= out($user['user_description']) ?></textarea>
+                id="description"
+                onkeyup="clear_parent_error(this)"><?= out($user['user_description']) ?></textarea>
         </label>
+        <div class="invalid-feedback">
+            Max 3500 characters
+        </div>
     </div>
-    <button onclick="showProfile()">Save changes</button>
-    <button onclick="showProfile()">Cancel</button>
+    <button onclick="changeBtnText()">Save changes</button>
+    <button class="close_cancel_btn"
+        onclick="showProfile()">Cancel</button>
 
 </form>
