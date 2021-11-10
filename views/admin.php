@@ -122,9 +122,10 @@ try {
             }
             foreach ($threads as $thread) {
             ?>
-        <article class="question_profile"
-            onclick="setComments(<?= $thread['thread_id']  ?>)">
-            <div>
+        <article data-event_id="<?= $thread['thread_id']?>"
+            onclick="goToComment(this)"
+            class="question_profile">
+            <div class="no_pointer">
                 <p class="bold"><?= out($thread['thread_name']) ?></p>
                 <p>Asked <?= $thread['thread_time'] ?></p>
             </div>
@@ -148,12 +149,12 @@ try {
                 if (isset($_SESSION['uuid'])) {
                     $isMe = $comment['user_id'] == $_SESSION['uuid'];
                 }
-                $r = 'posts/'.$comment['thread_id'];
-                echo 'r: '.$r;
+             
             ?>
-        <article onclick="goToComment(<?= $r?>)"
+        <article data-event_id="<?= $comment['thread_id']?>"
+            onclick="goToComment(this)"
             class="activity">
-            <div>
+            <div class="no_pointer">
                 <p class="bold"><?= out($decrypted_comments[$key]); ?></p>
                 <p>Sent <?= $comment['comment_ts'] ?></p>
             </div>
@@ -174,9 +175,9 @@ function setComments(threadId) {
     window.location.href = `/posts/${threadId}`;
 }
 
-function goToComment(threadId) {
-    console.log(threadId)
-    window.location.href = `${threadId}`;
+function goToComment() {
+    const threadId = event.target.dataset.event_id;
+    window.location.href = `/posts/${threadId}`;
 }
 
 function editProfile() {

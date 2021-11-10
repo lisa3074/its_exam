@@ -558,6 +558,10 @@ h4.at {
   align-self: flex-end;
   margin-right: 1rem;
 }
+
+.no_pointer {
+  pointer-events: none;
+}
 @media (min-width: 600px) {
   .activity,
   .question_profile,
