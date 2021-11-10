@@ -55,11 +55,11 @@ function validate() {
           console.log('link2')
           element.parentNode.classList.add("is-invalid");        }
         break;
-      /* case "file":
+       case "file":
         if (element.value == "") {
           element.classList.add("is-invalid");
         }
-        break; */
+        break; 
       case "select":
         const select = document.querySelector("#existing_topic");
         const topic = document.querySelector("#topic");

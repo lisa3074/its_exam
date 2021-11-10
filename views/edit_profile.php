@@ -99,8 +99,8 @@
             Max 3500 characters
         </div>
     </div>
-    <button onclick="changeBtnText()">Save changes</button>
-    <button class="close_cancel_btn"
-        onclick="showProfile()">Cancel</button>
+    <button onclick="showProfile()">Save changes</button>
 
+    <button class="close_cancel_btn"
+        onclick="showProfile('cancel')">Cancel</button>
 </form>

@@ -17,7 +17,7 @@
         ?>
         <div class="navigation">
             <ul>
-                <li><a href="/events">Events</a></li>
+                <li><a href="/events/all/all">Events</a></li>
                 <li><a href="/forum">Forum</a></li>
                 <?php
                 if (!isset($_SESSION['uuid'])) {

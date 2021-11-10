@@ -148,12 +148,14 @@ try {
                 if (isset($_SESSION['uuid'])) {
                     $isMe = $comment['user_id'] == $_SESSION['uuid'];
                 }
+                $r = 'posts/'.$comment['thread_id'];
+                echo 'r: '.$r;
             ?>
-        <article onclick="goToComment(<?= $comment['thread_id'] ?>)"
+        <article onclick="goToComment(<?= $r?>)"
             class="activity">
             <div>
                 <p class="bold"><?= out($decrypted_comments[$key]); ?></p>
-                <p>Asked <?= $comment['comment_ts'] ?></p>
+                <p>Sent <?= $comment['comment_ts'] ?></p>
             </div>
             <?= $isMe ? "<form action='/admin/delete/{$comment['comment_id']}/{$comment['user_id']}' method='POST'><button>Delete</button></form>" : '' ?>
         </article>
@@ -174,22 +176,23 @@ function setComments(threadId) {
 
 function goToComment(threadId) {
     console.log(threadId)
-    window.location.href = `/posts/${threadId}`;
+    window.location.href = `${threadId}`;
 }
 
 function editProfile() {
     console.log("editProfile")
     document.querySelector(".edit_profile").classList.remove("hide");
-    document.querySelector(".user_info").classList.add("hide");
+    document.querySelector(".user_container").classList.add("hide");
     document.querySelector(".close_cancel_btn").textContent = 'Cancel';
 }
 
-function showProfile() {
-    location.reload()
-}
-
-function changeBtnText() {
-    document.querySelector("#description").textContent = 'Close edit';
+function showProfile(type) {
+    if (type === 'cancel') {
+        event.preventDefault();
+    }
+    setTimeout(() => {
+        location.reload()
+    }, 500);
 }
 </script>
 

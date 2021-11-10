@@ -43,15 +43,15 @@ get('/posts/:thread_id/:display_message', function ($thread_id, $display_message
    require_once(__DIR__ . '/apis/api_display_comments.php');
    require_once(__DIR__ . '/views/posts.php');
 });
-get('/events/:category', function ($category) {
+get('/events/succes/:display_message', function ($display_message) {
+   require_once(__DIR__ . '/views/events.php');
+   
+});
+get('/events/:category/:genre', function ($category, $genre) {
    require_once(__DIR__ . '/views/events.php');
    require_once(__DIR__ . '/apis/api_display_events.php');
 });
 get('/events/event/:event_id', function ($event_id) {
-   require_once(__DIR__ . '/views/events.php');
-   
-});
-get('/events/succes/:display_message', function ($display_message) {
    require_once(__DIR__ . '/views/events.php');
    
 });
@@ -92,6 +92,11 @@ get('/admin/:display_message', function ($display_message) {
 get('/logout', function () {
    require_once(__DIR__ . '/bridges/bridge_logout.php');
 });
+get('/event/upload/:img/:type', function ($img, $type) {
+   $image = $img.'.'.$type;
+   require_once(__DIR__ . '/apis/api_add_event.php');
+});
+
 
 ##############################
 ############ POST ############
@@ -128,8 +133,12 @@ post('/forum', function () {
    require_once(__DIR__ . '/views/forum.php');
    require_once(__DIR__ . '/apis/api_post_thread.php');
 });
-post('/events', function () {
-   require_once(__DIR__ . '/apis/api_add_event.php');
+post('/events/new/:event', function ($event) {
+   require_once(__DIR__ . '/apis/api_upload_file.php');
+});
+post('/events/delete/:event_id/:user_id', function ($event_id, $user_id) {
+   require_once(__DIR__ . '/apis/api_delete_event.php');
+   
 });
 
 get('/error', function () {

@@ -8,7 +8,7 @@ if (!isset($_SESSION['uuid'])) {
     http_response_code(400);
     exit();
 }
-
+echo 'event: '.$event;
 
 /* Compare if the session cookie is the same as the value of the hidden input field */
 if (!isset($_SESSION['csrf']) || !isset($_POST['csrf'])) {
@@ -22,13 +22,20 @@ if (!$_POST['csrf'] == $_SESSION['csrf']) {
 
 if (!isset($_FILES['fileToUpload'])) {
     echo 'there\'s no file set';
+    echo 'File: '.$_FILES['fileToUpload'];
     exit();
 }
-//Is session id the same as profile user id?
-if ($user_id != $_SESSION['uuid']) {
-    http_response_code(400);
-    header('Location: /admin/You do not have permission to upload a picture on another user\'s profile.');
-    exit();
+if(!$event){
+    //Is session id the same as profile user id?
+    if ($user_id != $_SESSION['uuid']) {
+        http_response_code(400);
+        header('Location: /admin/You do not have permission to upload a picture on another user\'s profile.');
+        exit();
+    }
+    if (!isset($_POST['submit'])) {
+        echo '$_POST submit is not set';
+        exit();
+    }
 }
 
 $target_dir = "uploads/";
@@ -41,11 +48,6 @@ $valid_extensions = ['png', 'jpg', 'jpeg', 'gif'];
 $random_number = bin2hex(random_bytes(16));
 $random_image_name = 'uploads/' . $random_number . '.' . $extension;
 
-
-if (!isset($_POST['submit'])) {
-    echo '$_POST submit is not set';
-    exit();
-}
 
 // Check if image file is a actual image or fake image
 $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
@@ -91,7 +93,21 @@ if ($uploadOk == 0) {
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $random_image_name)) {
         echo "The file " . htmlspecialchars(basename($_FILES["fileToUpload"]["name"])) . " has been uploaded.";
-        require_once(__DIR__ . '/api_post_image.php');
+       if(!$event){
+          // require_once(__DIR__ . '/api_post_image.php');
+          echo 'profile image';
+           exit();
+        }
+        $_SESSION['event_title'] = $_POST['event_title'];
+        $_SESSION['event_time'] = $_POST['event_time'];
+        $_SESSION['event_desc'] = $_POST['event_desc'];
+        $_SESSION['event_ticket_link'] = $_POST['event_ticket_link'];
+        $_SESSION['event_category'] = $_POST['event_category'];
+        $_SESSION['event_genre'] = $_POST['event_genre'];
+        $_SESSION['event_image_credits'] = $_POST['event_image_credits'];
+
+      header("Location: /event/upload/$random_number/$extension"); 
+        exit();
     } else {
         http_response_code(400);
     }

@@ -1,16 +1,42 @@
-<form action="/events"
+<form action="/events/new/event"
     method="POST"
     onsubmit="return validate()"
-    class="new_event">
+    class="new_event"
+    enctype="multipart/form-data">
 
     <!-- Check for client side request forgery -->
     <input type="hidden"
         name="csrf"
         value=<?= $_SESSION['csrf'] ?>>
+    <!-- EVENT_IMAGE -->
+    <div class="event_image">
+        <img class="event_image previewImg"
+            src="/static/images/placeholder.png">
+        <input type="file"
+            name="fileToUpload"
+            id="fileToUpload"
+            data-validate="file"
+            onchange="preview('event')"
+            onclick="clear_parent_error(this)">
+        <div class="invalid-feedback">
+            You need to choose an image
+        </div>
+        <label class="fileToUpload_label"
+            for="fileToUpload">Choose image</label>
+    </div>
+
+    <!-- EVENT_IMAGE_CREDITS -->
+    <div class="event_image_credits">
+        <label>
+            <p>Photo credits (if needed)</p>
+            <input type="text"
+                placeholder="Ex. Photo by John Smith / www.johnsmith.com"
+                name="event_image_credits"
+                id="event_image_credits"
+                onkeyup="clear_parent_error(this)" />
+        </label>
+    </div>
     <!-- EVENT_TITLE -->
-
-
-    <!-- FIRST NAME -->
     <div class="event_title">
         <label>
             <p>Event title</p>
@@ -56,7 +82,6 @@
             Enter a valid date.
         </div>
     </div>
-    <!-- EVENT_IMAGE -->
 
     <!-- EVENT_CATEGORY -->
     <div class="event_category">
@@ -104,6 +129,7 @@
                 <option>Children music</option>
                 <option>New age</option>
                 <option>Accapella</option>
+                <option>Indie</option>
                 <option>Christian</option>
                 <option>Ska</option>
                 <option>Heavy metal</option>

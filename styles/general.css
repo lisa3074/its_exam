@@ -4,6 +4,10 @@
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
 }
+
+a {
+  color: black;
+}
 .submit_image {
   display: flex;
 }
@@ -117,11 +121,6 @@ textarea {
   margin-bottom: 0;
 }
 
-/* 
-    .comment p:nth-child(2) {
-        padding: 1rem 0;
-    } */
-
 .comment p:nth-child(3) {
   padding-bottom: 1rem;
 }
@@ -129,7 +128,6 @@ textarea {
 .me {
   justify-content: flex-end;
   background-color: #fff;
-  /*  margin-left: auto; */
   border-radius: 20px 20px 2px 20px;
 }
 
@@ -461,6 +459,7 @@ nav a {
 .nav_wrapper {
   display: flex;
   justify-content: space-between;
+  padding-bottom: 1rem;
 }
 
 .event {
@@ -479,13 +478,22 @@ nav a {
 
   display: grid;
   grid-template-areas:
-    "heading heading"
+    "heading at"
     "event_desc facts";
 }
 
 .event_facts {
   grid-area: facts;
-  padding-top: 0.5rem;
+}
+.event_facts button {
+  margin-bottom: 0;
+  justify-self: flex-end;
+}
+.event_desc {
+  line-height: 1.1rem;
+}
+.event_facts p {
+  margin-bottom: 0.5rem;
 }
 
 .event_info h4 {
@@ -494,10 +502,10 @@ nav a {
 
 .event_desc {
   grid-area: event_desc;
-  max-height: 100px;
+  max-height: 65px;
   overflow: scroll;
   white-space: pre-wrap;
-  padding: 0.5rem 1rem 0.5rem 0;
+  padding-right: 1rem;
 }
 
 .bgImg {
@@ -505,9 +513,51 @@ nav a {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.2;
+  opacity: 0.1;
 }
 
+.iconBtn {
+  padding: 0 0 0 0.5rem;
+  border-radius: 0;
+  box-shadow: 0px 0px 0px #ffffff;
+  background-color: #ffffff;
+  color: #303646;
+  font-weight: 900;
+  font-size: 1.2rem;
+  margin-bottom: 0;
+}
+
+.event_info h4 {
+  display: inline;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+
+.event_info h4:nth-child(2) {
+  grid-area: at;
+}
+.event_heading {
+  white-space: nowrap;
+  width: calc(100% - 1rem);
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  padding-bottom: 0.5rem;
+  height: 30px;
+}
+
+h4.at {
+  font-size: 1rem;
+  padding-top: 0.1rem;
+}
+.delete_event {
+  grid-area: one;
+  width: fit-content;
+  height: fit-content;
+  justify-self: flex-end;
+  align-self: flex-end;
+  margin-right: 1rem;
+}
 @media (min-width: 600px) {
   .activity,
   .question_profile,
@@ -552,13 +602,25 @@ nav a {
 
   .event {
     grid-template-areas: "one two";
-    grid-template-columns: 60% 40%;
-    grid-template-rows: 150px;
+    grid-template-columns: 60% calc(40% - 1rem);
+    grid-template-rows: 125px;
     column-gap: 1rem;
+  }
+  .event_info {
+    padding-left: 0;
   }
   .bgImg {
     grid-area: two;
-    opacity: 0.6;
+    opacity: 0.8;
+  }
+  .delete_event {
+    grid-area: two;
+    z-index: 100;
+    width: fit-content;
+    height: fit-content;
+    justify-self: flex-end;
+    align-self: flex-end;
+    margin-right: 1rem;
   }
 }
 @media (min-width: 700px) {

@@ -1,5 +1,5 @@
 //PREVIEW PROFILE IMAGE
-function preview() {
+function preview(event) {
   console.log("preview");
   //Select the hidden file input
   const fileinput = document.querySelector("#fileToUpload");
@@ -16,20 +16,23 @@ function preview() {
       };
       reader.readAsDataURL(uploadedImage);
     }
+    if (!event) {
       document.querySelectorAll(".submit_image").forEach(img => {
         img.classList.remove("hide");
       });
       //Find cancel icon
-      const cancel = document.querySelector(".submit_image[data-type='cancel']");
+    const cancel = document.querySelector(".submit_image[data-type='cancel']");
+      
       //On click reset file value back to new one
-        cancel.addEventListener("click", () => {
-            document.querySelector("#fileToUpload").value = "";
-            const src = document.querySelector(".previewImg").getAttribute("data-src");
-          document.querySelector(".previewImg").src = src;
-          //Hide icons
-          document.querySelectorAll(".submit_image").forEach(img => {
-            img.classList.add("hide");
-          });
+      cancel.addEventListener("click", () => {
+        document.querySelector("#fileToUpload").value = "";
+        const src = document.querySelector(".previewImg").getAttribute("data-src");
+        document.querySelector(".previewImg").src = src;
+        //Hide icons
+        document.querySelectorAll(".submit_image").forEach(img => {
+          img.classList.add("hide");
         });
+      });
+    }
   }
 }
