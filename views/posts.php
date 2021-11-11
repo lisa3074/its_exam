@@ -72,30 +72,35 @@ try {
                             if ($comment['comment_reply_uuid'] == $reply['comment_reply_uuid'] && $comment_id == $reply['comment_id']) {
                                 $alg = 'AES-128-CBC';
                                 $decryptKey = "47062c85f9b1a4d27f50717951f58fa0";
-
-                                echo '<p class="italic">Replied to ';
+                                $relational_comment;
+                                foreach ($comments as $reply_to_comment) {
+                                    $relational_comment = $reply['comment_reply_comment_id'];
+                                    if ($reply['comment_reply_comment_id'] == $reply_to_comment['comment_id']) {
+                                        $e1 = '<p class="quote"><span class="quote_signs">“ </span>';
+                                        $e2 = openssl_decrypt($reply_to_comment['comment_text'], $alg, $decryptKey, 0, $reply_to_comment['comment_iv']);
+                                        $e3 =  '<span class="quote_signs"> ”</span></p>';
+                                    }
+                                }
+                                if (!isset($_SESSION['privilige']) || $_SESSION['privilige'] == '2') {
+                                    echo "<p class='italic' data-comment_id='$relational_comment''>Replied to ";
+                                } else {
+                                    echo "<p class='italic' data-comment_id='$relational_comment' onclick='scrollToPost()''>Replied to ";
+                                }
                                 echo out($reply['firstname']) . ' ';
                                 echo out($reply['lastname']);
                                 echo ':</p>';
-                                foreach ($comments as $reply_to_comment) {
-
-                                    if ($reply['comment_reply_comment_id'] == $reply_to_comment['comment_id']) {
-                                        echo '<p class="quote">';
-                                        echo out(openssl_decrypt($reply_to_comment['comment_text'], $alg, $decryptKey, 0, $reply_to_comment['comment_iv']));
-                                        echo '</p>';
-                                    }
-                                }
+                                echo $e1, out($e2), $e3;
                             }
                         } ?>
-                <?php require_once(__DIR__ . '/../apis/api_display_comment_reply.php'); ?>
+
                 <!-- Use out to sanitize the read from the db, to prevent XXS -->
-                <p class="<?= $key === 0 ? 'bold' : '' ?>"><?= out($decrypted_comments[$key]); ?></p>
+                <p class="comment_text <?= $key === 0 ? 'bold' : '' ?>"><?= out($decrypted_comments[$key]); ?></p>
                 <div class="flex no_pad <?= $key == 0 ? 'question' : '' ?>">
                     <!-- Show reply link if: not first question, not the logged in users comment, user is logged in and user is not an organizer -->
-                    <?= $key == 0 || $isMe || !isset($_SESSION['privilige']) || $_SESSION['privilige'] == '2' ? '' : "<button data-id='$user_id' data-comment_id='$comment_id'
-                    onclick='reply()'>Reply</button>" ?>
+                    <?= $key == 0 || $isMe || !isset($_SESSION['privilige']) || $_SESSION['privilige'] == '2' ? '' : "<div><button data-id='$user_id' data-comment_id='$comment_id'
+                    onclick='reply()'>Reply</button></div>" ?>
                     <!-- DELETE BUTTON -> If it's not a question and user is an admin or comment owner, show delete button -->
-                    <?= !$question && $isAdmin || !$question && $isMe ? "<form action='/post/delete/$comment_id/$user_id/$thread_id' method='POST'><button>Delete</button></form>" : '' ?>
+                    <?= !$question && $isAdmin || !$question && $isMe ? "<form action='/post/delete/$comment_id/$user_id/$thread_id' method='POST'><button data-comment_id='$comment_id'>Delete</button></form>" : '' ?>
                     <!-- ANSWERED BUTTON -> If it's a question and user is comment owner, show marked as answered button -->
                     <?= $question && $isMe ? "<form action='/topic/update/$thread_id/$user_id/$thread_done' method='POST'><button>$thread_done_text</button></form>" : '' ?>
                     <!-- DELETE BUTTON -> If it's a question and user is an admin or comment owner, show delete button -->
@@ -121,7 +126,7 @@ try {
         <input type="hidden"
             name="reply_comment">
         <label for="comment">
-            <p>Write comment</p>
+            <p><span class="answering">Write comment</span> <span class="green red close hide">⤫</span></p>
             <textarea name="comment_text"
                 data-validate="str"
                 data-min="1"
@@ -143,13 +148,44 @@ try {
 </main>
 
 <script>
-function reply(val) {
+function reply() {
     event.preventDefault();
-    console.log(event.target.dataset.id);
-    console.log(event.target.dataset.comment_id);
-    console.log(val);
+    const name = event.target.parentNode.parentNode.parentNode.querySelector('h4>a').textContent;
     document.querySelector("input[name='reply_uuid']").value = event.target.dataset.id;
     document.querySelector("input[name='reply_comment']").value = event.target.dataset.comment_id;
+    document.querySelector(".comment_form .answering").textContent = 'Answering' + name;
+    document.querySelector(".comment_form .answering").classList.add("att");
+    document.querySelector(".comment_form .close").classList.remove("hide");
+    document.querySelector(".comment_form .close").addEventListener("click", () => {
+
+        document.querySelector(".comment_form .close").classList.add("hide");
+        document.querySelector(".comment_form .answering").textContent = "Write comment";
+        document.querySelector(".comment_form .answering").classList.remove("att");
+        document.querySelector("input[name='reply_comment']").value = "";
+        document.querySelector("input[name='reply_uuid']").value = "";
+    })
+    document.querySelector(".comment_form").scrollIntoView({
+        behavior: "smooth",
+        block: 'end',
+    })
+}
+
+function scrollToPost() {
+    console.log("scrollToPost")
+    if (document.querySelector(`button[data-comment_id="${event.target.dataset.comment_id}"]`)) {
+        const relation = document.querySelector(`button[data-comment_id="${event.target.dataset.comment_id}"]`).parentNode.parentNode.parentNode;
+        relation.scrollIntoView({
+            behavior: "smooth",
+            block: 'center',
+        })
+        relation.classList.add('bg_color_animation');
+        setTimeout(() => {
+            relation.classList.remove('bg_color_animation');
+
+        }, 4000);
+    } else {
+        alert('Post was deleted.')
+    }
 }
 </script>
 

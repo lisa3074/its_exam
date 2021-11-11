@@ -8,7 +8,7 @@ if (!isset($_SESSION)) {
     require_once(__DIR__ . './../cookie_config.php');
     session_start();
 }
-if(!isset($_SESSION['uuid'])){
+if (!isset($_SESSION['uuid'])) {
     header('Location: /event/error/You are not logged in. Please login to view your profile.');
     exit();
 }
@@ -122,14 +122,14 @@ try {
             }
             foreach ($threads as $thread) {
             ?>
-        <article data-event_id="<?= $thread['thread_id']?>"
+        <article data-event_id="<?= $thread['thread_id'] ?>"
             onclick="goToComment(this)"
             class="question_profile">
             <div class="no_pointer">
                 <p class="bold"><?= out($thread['thread_name']) ?></p>
                 <p>Asked <?= $thread['thread_time'] ?></p>
             </div>
-            <button>Mark as answered</button>
+            <!--  <button>Mark as answered</button> -->
         </article>
         <?php
             }
@@ -149,9 +149,9 @@ try {
                 if (isset($_SESSION['uuid'])) {
                     $isMe = $comment['user_id'] == $_SESSION['uuid'];
                 }
-             
+
             ?>
-        <article data-event_id="<?= $comment['thread_id']?>"
+        <article data-event_id="<?= $comment['thread_id'] ?>"
             onclick="goToComment(this)"
             class="activity">
             <div class="no_pointer">

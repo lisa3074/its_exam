@@ -8,6 +8,15 @@
 a {
   color: black;
 }
+
+a,
+button,
+.previewImg,
+.thread,
+.question_profile,
+.activity {
+  cursor: pointer;
+}
 .submit_image {
   display: flex;
 }
@@ -90,6 +99,7 @@ textarea {
 
 #comment {
   height: 5rem;
+  margin-top: 0.5rem;
 }
 
 .comment_wrapper {
@@ -113,10 +123,14 @@ textarea {
   font-style: italic;
 }
 
+.no_pointer .bold {
+  font-style: normal;
+}
+
 .italic {
   font-style: italic;
   color: gray;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
 }
 
 .comment form {
@@ -134,7 +148,10 @@ textarea {
 .comment p:nth-child(3) {
   padding-bottom: 1rem;
 }
-
+.comment_text {
+  padding-bottom: 1rem;
+  font-size: 0.85rem;
+}
 .me {
   justify-content: flex-end;
   background-color: #fff;
@@ -370,10 +387,6 @@ nav a {
   width: 100%;
 }
 
-.user_container {
-  /* margin-bottom: 1rem; */
-}
-
 .profile_name {
   font-size: 22px;
   padding-right: 1rem;
@@ -588,8 +601,27 @@ h4.at {
   background-color: green;
 }
 
+span.close {
+  width: fit-content;
+  font-size: 1rem;
+  padding: 0.1rem 0.3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+span.close.hide {
+  display: none;
+}
 .yellow {
   background-color: #d69400;
+}
+.red {
+  background-color: rgb(83, 70, 204);
+}
+
+.att {
+  color: rgb(83, 70, 204);
+  padding-right: 0.5rem;
 }
 
 .thread_info {
@@ -605,9 +637,67 @@ h4.at {
 .thread .status {
   grid-area: info_one;
 }
-
+.comment_form {
+  padding-top: 1rem;
+}
 .comment_form label {
   display: block;
+}
+.quote {
+  font-style: italic;
+  color: gray;
+  font-size: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgb(158, 158, 158);
+  margin-bottom: 0.5rem;
+}
+
+.me .quote {
+  border-bottom: 1px solid rgb(216, 216, 216);
+}
+.quote_signs {
+  font-size: 1rem;
+  position: relative;
+  top: 0.2rem;
+}
+
+.bg_color_animation {
+  background: linear-gradient(-45deg, #8d9dc48c, #60588883, #dbbaa9, #eaeaec, #d6dae3, #d6dae3, #d6dae3);
+  background-size: 400% 400%;
+  animation: gradient 4s ease 1;
+}
+.bg_color_animation.me {
+  background: linear-gradient(-45deg, #8d9dc48c, #60588883, #dbbaa9, #eaeaec, #ffffff, #ffffff, #ffffff);
+  background-size: 400% 400%;
+  animation: gradient 4s ease 1;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.bg_color_animation p {
+  animation: change_color 4s ease 1;
+}
+
+@keyframes change_color {
+  0% {
+  }
+  25% {
+    color: black;
+  }
+  75% {
+    color: black;
+  }
+  100% {
+  }
 }
 
 @media (min-width: 600px) {

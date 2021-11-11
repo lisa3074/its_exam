@@ -3,3 +3,5 @@ pass/
 *.png
 *.jpg
 *jpeg
+
+.VSCodeCounter/
