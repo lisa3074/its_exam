@@ -5,19 +5,19 @@ if (!isset($_SESSION)) {
 }
 require_once(__DIR__ . '/../db.php');
 
-
 if (!isset($_SESSION['uuid'])) {
   header('Location: /login/You need to log in');
   exit();
 }
-if ($_SESSION['privilige'] != '3' || $_SESSION['privilige'] != '2') {
-  header('Location: /events/You do not have permission to delete this event');
+if ($user_id != $_SESSION['uuid'] || $_SESSION['privilige'] == '2') {
+  if (!isset($thread_id)) {
+    header("Location: /posts/$thread_id/You do not have permission to delete this event");
+  } else {
+    header("Location: /admin/You do not have permission to delete this event");
+  }
   exit();
 }
-if ($user_id != $_SESSION['uuid'] && $_SESSION['privilige'] == '2') {
-  header('Location: /admin/You do not have permission to delete this comment');
-  exit();
-}
+
 
 try {
   $q = $db->prepare('DELETE FROM comments
@@ -25,8 +25,11 @@ try {
                     ');
   $q->bindValue(':comment_id', $comment_id);
   $q->execute();
-
-  header('Location: /admin');
+  if (!isset($thread_id)) {
+    header("Location: /admin/Your comment has been deleted.");
+  } else {
+    header("Location: /posts/$thread_id/Your comment has been deleted.");
+  }
 } catch (PDOException $ex) {
   echo $ex;
 }

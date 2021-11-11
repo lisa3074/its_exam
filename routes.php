@@ -130,7 +130,11 @@ post('/post/comment/:thread_id', function ($thread_id) {
    require_once(__DIR__ . '/apis/api_save_comment.php');
 });
 
-post('/post/delete/:comment_id/:user_id', function ($comment_id, $user_id) {
+post('/admin/delete/:comment_id/:user_id', function ($comment_id, $user_id) {
+   require_once(__DIR__ . '/apis/api_delete_comment.php');
+});
+
+post('/post/delete/:comment_id/:user_id/:thread_id', function ($comment_id, $user_id, $thread_id) {
    require_once(__DIR__ . '/apis/api_delete_comment.php');
 });
 
