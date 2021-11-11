@@ -15,12 +15,15 @@ require_once(__DIR__ . './../apis/api_display_events.php');
             echo urldecode($display_message);
         } ?>
     </p>
+    <?php
+  //Show add event only if a user is logged in and has the right privilige
+        if (isset($_SESSION['privilige']) && ($_SESSION['privilige'] == '2' ||  $_SESSION['privilige'] == '3')) {?>
+    <section class='add_event_wrapper hide'><?php
+        require_once(__DIR__.'/add_event.php'); ?>
+    </section><?php
+        }
+?>
 
-    <section class="add_event_wrapper hide">
-        <?php 
-        require_once(__DIR__.'/add_event.php');
-        ?>
-    </section>
     <section class="events_wrapper">
         <nav class="nav_wrapper">
             <nav>
@@ -78,6 +81,15 @@ require_once(__DIR__ . './../apis/api_display_events.php');
         <section class="events_wrapper">
             <?php
         foreach ($events as $event) {
+            //Make sure only event owner and admins can delete events.
+            $isOwner = false;
+            if(isset($_SESSION['uuid'])){
+                $isOwner = $event['uuid'] == $_SESSION['uuid'];
+                if($_SESSION['privilige'] == '3'){
+                    $isOwner = true;
+                }
+            }
+       
             ?>
             <article class="event">
                 <div class="event_info">
@@ -93,11 +105,13 @@ require_once(__DIR__ . './../apis/api_display_events.php');
                                 target="_blank">Buy tickets</a></p>
 
 
-                        <!-- <a href="/events/event/<?=$event['event_id']?>">See event</a> -->
+                        <!-- /* 
+                        todo: <a href="/events/event/<?=$event['event_id']?>">See event</a> */-->
                     </div>
                 </div>
-                <?=$event['uuid'] == $_SESSION['uuid'] ? "<form class='delete_event' method='POST' action='/events/delete/{$event['event_id']}/{$event['uuid']}'><button>Delete</button>
-                </form>" : ''?>
+
+                <!-- Delete button for owner and admins -->
+                <?= $isOwner ? "<form class='delete_event' method='POST' action='/events/delete/{$event['event_id']}/{$event['uuid']}'><button>Delete</button></form>" : ''?>
                 <img src="/uploads/<?=out($event['event_image'])?>"
                     class="bgImg"
                     title="<?=out($event['event_image_credits'])?>" />
@@ -105,6 +119,7 @@ require_once(__DIR__ . './../apis/api_display_events.php');
             </article>
 
             <?php
+           
         }
         ?>
         </section>
@@ -134,11 +149,13 @@ function showEvents() {
     event.preventDefault();
     location.reload();
 }
-
-/* function deleteEvent(event_id, user_id) {
-    console.log(event_id, user_id)
-    window.location.href = `/events/delete/${event_id}/${user_id}`;
-} */
+/*
+          ! Warning
+          * Note
+          ? Question
+          // done
+          todo: todo
+          */
 </script>
 
 <?php

@@ -2,8 +2,6 @@
 require_once(__DIR__ . '/default_top.php');
 require_once(__DIR__ . '/nav.php');
 require_once(__DIR__ . './../cookie_config.php');
-require_once(__DIR__ . '/../apis/api_display_threads.php');
-
 
 ?>
 <main class="threads_wrapper">
@@ -19,24 +17,12 @@ require_once(__DIR__ . '/../apis/api_display_threads.php');
         echo urldecode($display_message);
     } ?>
     </p>
-    <section class="threads">
-        <h3>Threads</h3>
-        <article>
-            <?php
-                foreach ($threads as $thread) {
 
-                ?>
-            <article class="thread"
-                onclick="setComments('<?= $thread['thread_id'] ?>')">
-                <p class="bold question"><?= out($thread['thread_name']) ?></p>
-                <p class="asked_by">Asked by: <?= out($thread['firstname']) ?> <?= out($thread['lastname']) ?></p>
-            </article>
-            <?php
-                }
-                ?>
-        </article>
-    </section>
+
     <?php
+    //Get topics
+    require_once(__DIR__.'/topics.php');
+
         if (isset($_SESSION['uuid']) && $_SESSION['privilige'] != '2') {
         ?>
     <form onsubmit="return validate()"

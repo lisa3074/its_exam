@@ -111,7 +111,7 @@ if( $_POST['password'] != $_POST['password_match']){
     $salt = hash("sha256",base64_encode(openssl_random_pseudo_bytes(10)));
     $currentTime = time(); //timestamp
  try{
-  $q = $db->prepare("INSERT INTO user (firstname, lastname, email, password, salt, uuid, logger, logged_time, privilige, user_blocked) values (:firstname, :lastname, :email, :password, :salt, :uuid, 0, $currentTime, :privilige, :user_blocked)");
+  $q = $db->prepare("INSERT INTO user (firstname, lastname, email, password, salt, uuid, logger, logged_time, privilige, user_blocked, user_image) values (:firstname, :lastname, :email, :password, :salt, :uuid, 0, $currentTime, :privilige, :user_blocked, :user_image)");
   $q->bindValue(':firstname', $_POST['firstname']);
   $q->bindValue(':lastname', $_POST['lastname']);
   $q->bindValue(':email', strtolower($_POST['user_email']));
@@ -119,6 +119,7 @@ if( $_POST['password'] != $_POST['password_match']){
   $q->bindValue(':salt',hash("sha256", $salt));
   $q->bindValue(':uuid', bin2hex(random_bytes(16)));
   $q->bindValue(':user_blocked', 0);
+  $q->bindValue(':user_image', 'user_placeholder.png');
    if( $radiovalue == 3 && $_POST['key'] == 12345 ){
     $q->bindValue(':privilige', 3);
   }else if($radiovalue == 2 ){

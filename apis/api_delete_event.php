@@ -10,7 +10,10 @@ if(!isset($_SESSION['uuid'])){
     header('Location: /login/You need to log in');
      exit();
 }
-if($user_id != $_SESSION['uuid']){
+if($_SESSION['privilige'] != '3' || $_SESSION['privilige'] != '2'){
+  header('Location: /events/You do not have permission to delete this event');
+}
+if($user_id != $_SESSION['uuid'] && $_SESSION['privilige'] == '2'){
      header('Location: /events/You do not have permission to delete this event');
     exit();
 }

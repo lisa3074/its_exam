@@ -557,10 +557,23 @@ h4.at {
   justify-self: flex-end;
   align-self: flex-end;
   margin-right: 1rem;
+  z-index: 100;
 }
 
 .no_pointer {
   pointer-events: none;
+}
+
+.green {
+  color: white;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.65rem;
+  /*  border: 1px solid black; */
+  box-shadow: 1px 1px 5px #61697caa;
+  padding: 0.25rem 0.3rem;
+  border-radius: 5px;
+  background-color: green;
 }
 @media (min-width: 600px) {
   .activity,

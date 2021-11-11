@@ -11,7 +11,7 @@
     <!-- EVENT_IMAGE -->
     <div class="event_image">
         <img class="event_image previewImg"
-            src="/static/images/placeholder.png">
+            src="/uploads/placeholder.png">
         <input type="file"
             name="fileToUpload"
             id="fileToUpload"

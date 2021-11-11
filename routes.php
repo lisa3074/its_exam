@@ -8,6 +8,7 @@ get('/', function () {
 });
 
 get('/event/error/:display_message', function ($display_message) {
+   require_once(__DIR__ . '/bridges/bridge_go_to_start.php');
    require_once(__DIR__ . '/views/events.php');
 });
 
@@ -18,10 +19,15 @@ get('/event/error/:display_message', function ($display_message) {
 get('/events', function () {
    require_once(__DIR__ . '/views/events.php');
 });
+get('/events/:display_message', function ($display_message) {
+   require_once(__DIR__ . '/bridges/bridge_go_to_start.php');
+   require_once(__DIR__ . '/views/events.php');
+});
 get('/forum', function () {
    require_once(__DIR__ . '/views/forum.php');
 });
 get('/forum/:display_message', function ($display_message) {
+   require_once(__DIR__ . '/bridges/bridge_go_to_start.php');
    require_once(__DIR__ . '/views/forum.php');
 });
 
@@ -44,6 +50,7 @@ get('/posts/:thread_id/:display_message', function ($thread_id, $display_message
    require_once(__DIR__ . '/views/posts.php');
 });
 get('/events/succes/:display_message', function ($display_message) {
+   require_once(__DIR__ . '/bridges/bridge_go_to_start.php');
    require_once(__DIR__ . '/views/events.php');
    
 });
@@ -57,6 +64,7 @@ get('/events/event/:event_id', function ($event_id) {
 });
 
 get('/index/:display_error', function ($display_error) {
+   require_once(__DIR__ . '/bridges/bridge_go_to_start.php');
    require_once(__DIR__ . '/views/index.php');
 });
 
@@ -85,6 +93,7 @@ get('/admin/note/:note', function ($note) {
 });
 
 get('/admin/:display_message', function ($display_message) {
+   require_once(__DIR__ . '/bridges/bridge_go_to_start.php');
    require_once(__DIR__ . '/views/admin.php');
 });
 
@@ -94,6 +103,7 @@ get('/logout', function () {
 });
 get('/event/upload/:img/:type', function ($img, $type) {
    $image = $img.'.'.$type;
+   require_once(__DIR__ . '/bridges/bridge_go_to_start.php');
    require_once(__DIR__ . '/apis/api_add_event.php');
 });
 
@@ -105,40 +115,46 @@ get('/event/upload/:img/:type', function ($img, $type) {
 post('/login', function () {
    require_once(__DIR__ . '/apis/api_login.php');
 });
+
 post('/signup', function () {
    require_once(__DIR__ . '/apis/api_signup.php');
 });
+
 post('/admin', function () {
    require_once(__DIR__ . '/apis/api_update_user.php');
-   require_once(__DIR__ . '/views/admin.php');
-});
-post('/admin/image/:user_id', function ($user_id) {
-   require_once(__DIR__ . '/apis/api_upload_file.php');
-   //require_once(__DIR__ . '/views/admin.php');
-});
-post('/posts/comment/:thread_id', function ($thread_id) {
-   require_once(__DIR__ . '/apis/api_save_comment.php');
-   require_once(__DIR__ . '/views/posts.php');
-});
-post('/admin/delete/:comment_id/:user_id', function ($comment_id, $user_id) {
-   require_once(__DIR__ . '/apis/api_delete_comment.php');
-   require_once(__DIR__ . '/views/admin.php');
-});
-post('/show_note', function () {
-   require_once(__DIR__ . '/apis/api_display_note.php');
-   require_once(__DIR__ . '/views/admin.php');
 });
 
+post('/admin/image/:user_id', function ($user_id) {
+   require_once(__DIR__ . '/apis/api_upload_file.php');
+});
+
+post('/post/comment/:thread_id', function ($thread_id) {
+   require_once(__DIR__ . '/apis/api_save_comment.php');
+});
+
+post('/post/delete/:comment_id/:user_id', function ($comment_id, $user_id) {
+   require_once(__DIR__ . '/apis/api_delete_comment.php');
+});
+
+post('/topic/delete/:thread_id/:user_id', function ($thread_id, $user_id) {
+   require_once(__DIR__ . '/apis/api_delete_thread.php');
+});
+
+/* post('/show_note', function () {
+   require_once(__DIR__ . '/apis/api_display_note.php');
+   require_once(__DIR__ . '/views/admin.php');
+}); */
+
 post('/forum', function () {
-   require_once(__DIR__ . '/views/forum.php');
    require_once(__DIR__ . '/apis/api_post_thread.php');
 });
+
 post('/events/new/:event', function ($event) {
    require_once(__DIR__ . '/apis/api_upload_file.php');
 });
+
 post('/events/delete/:event_id/:user_id', function ($event_id, $user_id) {
    require_once(__DIR__ . '/apis/api_delete_event.php');
-   
 });
 
 get('/error', function () {
