@@ -52,7 +52,6 @@ get('/posts/:thread_id/:display_message', function ($thread_id, $display_message
 get('/events/succes/:display_message', function ($display_message) {
    require_once(__DIR__ . '/bridges/bridge_go_to_start.php');
    require_once(__DIR__ . '/views/events.php');
-   
 });
 get('/events/:category/:genre', function ($category, $genre) {
    require_once(__DIR__ . '/views/events.php');
@@ -60,7 +59,6 @@ get('/events/:category/:genre', function ($category, $genre) {
 });
 get('/events/event/:event_id', function ($event_id) {
    require_once(__DIR__ . '/views/events.php');
-   
 });
 
 get('/index/:display_error', function ($display_error) {
@@ -102,7 +100,7 @@ get('/logout', function () {
    require_once(__DIR__ . '/bridges/bridge_logout.php');
 });
 get('/event/upload/:img/:type', function ($img, $type) {
-   $image = $img.'.'.$type;
+   $image = $img . '.' . $type;
    require_once(__DIR__ . '/bridges/bridge_go_to_start.php');
    require_once(__DIR__ . '/apis/api_add_event.php');
 });
@@ -136,14 +134,9 @@ post('/post/delete/:comment_id/:user_id', function ($comment_id, $user_id) {
    require_once(__DIR__ . '/apis/api_delete_comment.php');
 });
 
-post('/topic/delete/:thread_id/:user_id', function ($thread_id, $user_id) {
-   require_once(__DIR__ . '/apis/api_delete_thread.php');
+post('/topic/update/:thread_id/:user_id/:thread_done', function ($thread_id, $user_id, $thread_done) {
+   require_once(__DIR__ . '/apis/api_mark_thread.php');
 });
-
-/* post('/show_note', function () {
-   require_once(__DIR__ . '/apis/api_display_note.php');
-   require_once(__DIR__ . '/views/admin.php');
-}); */
 
 post('/forum', function () {
    require_once(__DIR__ . '/apis/api_post_thread.php');

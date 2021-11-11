@@ -15,7 +15,9 @@ if (!isset($_SESSION)) {
         <?php
         // Use out to sanitize the read from the db, to prevent XXS 
         echo urldecode($display_message);
-    } ?>
+    }
+    $thread_done;
+        ?>
     </p>
     <button onclick="history.back()">Back</button>
     <section class="comment_wrapper">
@@ -29,7 +31,9 @@ if (!isset($_SESSION)) {
                     }
                     $comment_id = $comment['comment_id'];
                     $thread_id = $comment['thread_id'];
-                    $user_id = $comment['user_id']; ?>
+                    $thread_done = $comment['thread_done'];
+                    $user_id = $comment['user_id'];
+                    $thread_done_text = $thread_done ? 'Open topic' : 'Mark as answered'; ?>
             <h1 class="heading"><?= $key === 0 ? 'Question:' : '' ?><?= $key === 1 ? 'Answers:' : '' ?> </h1>
             <div class="comment <?= $isMe ? 'me' : '' ?> <?= $key === 0 ? 'question' : '' ?>">
                 <div class="flex">
@@ -49,14 +53,14 @@ if (!isset($_SESSION)) {
                 <!-- DELETE BUTTON -> If it's a question and user is an admin or comment owner, show delete button -->
                 <?= $question && $isAdmin || $question && $isMe ? "<form action='/topic/delete/$thread_id/$user_id' method='POST'><button>Delete topic</button></form>" : '' ?>
                 <!-- ANSWERED BUTTON -> If it's a question and user is comment owner, show marked as answered button -->
-                <?= $question && $isMe ? "<form action='/topic/delete/$thread_id/$user_id' method='POST'><button>Mark as answered</button></form>" : '' ?>
+                <?= $question && $isMe ? "<form action='/topic/update/$thread_id/$user_id/$thread_done' method='POST'><button>$thread_done_text</button></form>" : '' ?>
             </div>
             <?php } ?>
         </article>
     </section>
 
     <!-- only show form if user is logged in -->
-    <?php if (isset($_SESSION['uuid']) && $_SESSION['privilige'] != '2') { ?>
+    <?php if (isset($_SESSION['uuid']) && $_SESSION['privilige'] != '2' && !$thread_done) { ?>
     <form action="/posts/comment/<?= $thread_id ?>"
         method="POST">
         <!-- Hidden input field to prevent CSRF with value that coresponds to the session['csrf] -->
@@ -68,7 +72,9 @@ if (!isset($_SESSION)) {
             placeholder="Write a comment"></textarea>
         <button>Send</button>
     </form>
-    <?php } ?>
+    <?php }
+        echo !$thread_done ? '' : '<p>As the topic has been marked as answered by the topic starter, it is closed for further comments.</p>';
+        ?>
 
 </main>
 

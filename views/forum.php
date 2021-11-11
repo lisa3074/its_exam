@@ -4,7 +4,7 @@ require_once(__DIR__ . '/nav.php');
 require_once(__DIR__ . './../cookie_config.php');
 
 ?>
-<main class="threads_wrapper">
+<main class="threads_wrapper admin_main">
     <?php
     if (isset($_SESSION['uuid']) && $_SESSION['privilige'] != '2') {
     ?>
@@ -20,8 +20,8 @@ require_once(__DIR__ . './../cookie_config.php');
 
 
     <?php
-    //Get topics
-    require_once(__DIR__.'/topics.php');
+        //Get topics
+        require_once(__DIR__ . '/topics.php');
 
         if (isset($_SESSION['uuid']) && $_SESSION['privilige'] != '2') {
         ?>
