@@ -1,32 +1,30 @@
 <?php
-require_once(__DIR__.'/../db.php');
+/* import modules */
+require_once(__DIR__ . '/../db.php');
+require_once(__DIR__ . './../cookie_config.php');
 
-if(!isset($_SESSION)){
-  require_once(__DIR__.'./../cookie_config.php');
-    session_start();
-} 
-
-try{
-     //use view instead, to limit permission
-   $q = $db->prepare('SELECT * FROM display_comments
+try {
+  /* get comments from view */
+  $q = $db->prepare('SELECT * FROM display_comments
                     WHERE user_id = :uuid
                     ORDER BY comment_ts desc');
   $q->bindValue(':uuid', $_SESSION['uuid']);
   $q->execute();
+  if (!$q->rowCount()) {
+    exit();
+  }
   $comments = $q->fetchAll();
- 
-
- //encrypting with CBC
-$alg='AES-128-CBC';
-//$ciphertext = $comments['comment_text'];
-$key="47062c85f9b1a4d27f50717951f58fa0";
-$decrypted_comments = [];
-for($i = 0; $i < count($comments); $i++){
-    $comment=openssl_decrypt($comments[$i]['comment_text'], $alg, $key, 0, $comments[$i]['comment_iv']);
+  //encrypting with CBC
+  $alg = 'AES-128-CBC';
+  //secret key
+  $key = "47062c85f9b1a4d27f50717951f58fa0";
+  $decrypted_comments = [];
+  for ($i = 0; $i < count($comments); $i++) {
+    $comment = openssl_decrypt($comments[$i]['comment_text'], $alg, $key, 0, $comments[$i]['comment_iv']);
     array_push($decrypted_comments, $comment);
-} 
-
-// exit(); 
-}catch(PDOException $ex){
+  }
+} catch (PDOException $ex) {
   echo $ex;
+  http_response_code(400);
+  exit();
 }

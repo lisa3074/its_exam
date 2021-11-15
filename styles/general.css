@@ -586,7 +586,8 @@ h4.at {
   z-index: 100;
 }
 
-.no_pointer {
+.no_pointer,
+.no_pointer2 {
   pointer-events: none;
 }
 

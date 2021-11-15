@@ -1,39 +1,32 @@
     <?php
-    if (!isset($_SESSION)) {
-        session_start();
-    }
+    require_once(__DIR__ . '/../apis/api_get_reply_comment.php');
+
     $loggedIn = 'top_nav';
+
+    /* If user is logged in */
     if (isset($_SESSION['uuid'])) {
         $loggedIn = 'top_nav loggedIn';
-    }
-    ?>
-    <nav class="<?= $loggedIn ?>">
+    } ?>
 
-        <?php
-        //Only show greeting if user is logged in.
+    <nav class="<?= $loggedIn ?>">
+        <?php //Only show greeting if user is logged in.
         if (isset($_SESSION['uuid'])) {
             echo "<p><a href='/admin'>{$_SESSION['firstname']} | PROFILE</a></p>";
-        }
-        ?>
+        }  ?>
+
         <div class="navigation">
             <ul>
                 <li><a href="/events/all/all">Events</a></li>
                 <li><a href="/forum">Forum</a></li>
-                <?php
-                if (!isset($_SESSION['uuid'])) {
-                ?>
-                <li><a href="/signup">Signup</a></li>
-                <li><a href="/login">Login</li></a>
-                <?php
-                }
-                ?>
+                <!-- Only show if user is not logged in -->
+                <?php if (!isset($_SESSION['uuid'])) { ?>
+                    <li><a href="/signup">Signup</a></li>
+                    <li><a href="/login">Login</li></a>
+                <?php } ?>
             </ul>
-            <?php
-            //Only show logout if user is logged in.
+            <?php //Only show logout if user is logged in.
             if (isset($_SESSION['uuid'])) {
                 echo '<form action="/logout"><button>Logout</button></form>';
-            }
-            ?>
-
+            } ?>
         </div>
     </nav>

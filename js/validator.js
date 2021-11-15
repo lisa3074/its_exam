@@ -8,7 +8,7 @@ function validate() {
   });
   elements_to_validate.forEach(function (element) {
     switch (element.getAttribute("data-validate")) {
-      case "str":
+      case "str": //if string, set min and max characters to the data-attributes values
         if (
           element.value.length < parseInt(element.getAttribute("data-min")) ||
           element.value.length > parseInt(element.getAttribute("data-max"))
@@ -18,7 +18,7 @@ function validate() {
           return false;
         }
         break;
-      case "int":
+      case "int": //if integers, set min and max integers to the data-attributes values
         if (
           !parseInt(element.value) ||
           parseInt(element.value) < parseInt(element.getAttribute("data-min")) ||
@@ -27,14 +27,14 @@ function validate() {
           element.parentNode.classList.add("is-invalid");
         }
         break;
-      case "email":
+      case "email": //if email, make sure it passes regex pattern for email
         const re =
           /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!re.test(element.value.toLowerCase())) {
           element.parentNode.classList.add("is-invalid");
         }
         break;
-      case "match":
+      case "match": //if password make sure it passes regex pattern for password and that the password and match password is equal
         const pattern =
           /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\+|\=|\[|\{|\]|\}|\||\\|\'|\<|\,|\.|\>|\?|\/|\""|\;|\:|\s]).{8,32}$/;
         if (!pattern.test(element.value)) {
@@ -49,26 +49,18 @@ function validate() {
           }
         }
         break;
-      case "url":
+      case "url": //if url, make sure it passes regex pattern for url
         const link_pattern = /^(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/i;
         if (!link_pattern.test(element.value.toLowerCase()) && element.value !== '') {
           console.log('link2')
           element.parentNode.classList.add("is-invalid");        }
         break;
-       case "file":
+       case "file": //if file, make sure a file is chosen
         if (element.value == "") {
           element.classList.add("is-invalid");
         }
         break; 
-      case "select":
-        const select = document.querySelector("#existing_topic");
-        const topic = document.querySelector("#topic");
-        if (select.value == "choose" && topic.value == "") {
-          topic.classList.add("is-invalid");
-          select.classList.add("is-invalid");
-        }
-        break;
-      case "admin_key":
+      case "admin_key": //if admin-key (signup), make sure it matches the below string (just to make signup easy in development / test mode)
         const admin = document.querySelector("#admin");
         if (element.value != 'cQxIQtxEycwGq1RWzpcZUQ@' && admin.checked) {
           element.classList.add("is-invalid");

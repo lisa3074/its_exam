@@ -1,30 +1,28 @@
 <?php
-if(!isset($_SESSION)){
-  require_once(__DIR__.'./../cookie_config.php');
-    session_start();
-}
-require_once(__DIR__.'/../db.php');
+/* import module */
+require_once(__DIR__ . './../cookie_config.php');
+require_once(__DIR__ . '/../db.php');
+require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
 
-
-if(!isset($_SESSION['uuid'])){
-    header('Location: /login/You need to log in');
-     exit();
-}
-if($_SESSION['privilige'] != '3' || $_SESSION['privilige'] != '2'){
+/* if user is not logged in as admin or event organizer */
+if ($_SESSION['privilige'] != '3' || $_SESSION['privilige'] != '2') {
   header('Location: /events/You do not have permission to delete this event');
 }
-if($user_id != $_SESSION['uuid'] && $_SESSION['privilige'] == '2'){
-     header('Location: /events/You do not have permission to delete this event');
-    exit();
+
+//If logged in user is not the topic owner but is an event organizer
+if ($user_id != $_SESSION['uuid'] && $_SESSION['privilige'] == '2') {
+  header('Location: /events/You do not have permission to delete this event');
+  exit();
 }
 
-try{
-  $q = $db->prepare('DELETE FROM events
-	                WHERE event_id = :event_id
-                    ');
-$q->bindValue(':event_id', $event_id);
+try {
+  $q = $db->prepare('DELETE FROM events WHERE event_id = :event_id ');
+  $q->bindValue(':event_id', $event_id);
   $q->execute();
- header('Location: /events/succes/The event was deleted.');
-}catch(PDOException $ex){
+  header('Location: /events/succes/The event was deleted.');
+  exit();
+} catch (PDOException $ex) {
   echo $ex;
+  http_response_code(400);
+  exit();
 }
