@@ -1,6 +1,6 @@
 <?php
-require_once(__DIR__.'/default_top.php');
-require_once(__DIR__.'/nav.php');
+require_once(__DIR__ . '/default_top.php');
+require_once(__DIR__ . '/nav.php');
 
 ?>
 
@@ -13,11 +13,11 @@ require_once(__DIR__.'/nav.php');
         onsubmit="return validate()"
         class="signup_form">
         <?php
-  if( isset($display_error) ){
-   echo '<p class="url_decode sign_in_up">'.urldecode($display_error).'</p>';
-    }
+        if (isset($display_error)) {
+            echo '<p class="url_decode sign_in_up">' . urldecode($display_error) . '</p>';
+        }
 
-?>
+        ?>
         <div class="form_wrapper first">
             <p>What kind of account do you want to create?</p>
             <div class="form-check">
@@ -62,7 +62,7 @@ require_once(__DIR__.'/nav.php');
 
             <div class="admin_account hide">
                 <div class="col-md-4 form-floating mb-3">
-                    <input type="number"
+                    <input type="text"
                         class="form-control"
                         aria-describedby="admin_input"
                         placeholder="Administrator key"
@@ -155,4 +155,4 @@ require_once(__DIR__.'/nav.php');
 
 </main>
 <?php
-require_once(__DIR__.'/bottom.php');
+require_once(__DIR__ . '/bottom.php');

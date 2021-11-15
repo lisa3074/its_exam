@@ -86,7 +86,7 @@ if ($password_length < 8 or $password_length > 32) {
 
 $radiovalue = $_POST['account'];
 //Admin
-if ($radiovalue == 3 && $_POST['key'] != 12345) {
+if ($radiovalue == 3 && $_POST['key'] != 'cQxIQtxEycwGq1RWzpcZUQ@') {
   header('Location: /signup/You\'ve entered a wrong admin key. Try again or choose another account type.');
   exit();
 }
@@ -120,7 +120,7 @@ try {
   $q->bindValue(':uuid', bin2hex(random_bytes(16)));
   $q->bindValue(':user_blocked', 0);
   $q->bindValue(':user_image', 'user_placeholder.png');
-  if ($radiovalue == 3 && $_POST['key'] == 12345) {
+  if ($radiovalue == 3 && $_POST['key'] == 'cQxIQtxEycwGq1RWzpcZUQ@') {
     $q->bindValue(':privilige', 3);
   } else if ($radiovalue == 2) {
     $q->bindValue(':privilige', 2);

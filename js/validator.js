@@ -70,7 +70,7 @@ function validate() {
         break;
       case "admin_key":
         const admin = document.querySelector("#admin");
-        if (element.value != 12345 && admin.checked) {
+        if (element.value != 'cQxIQtxEycwGq1RWzpcZUQ@' && admin.checked) {
           element.classList.add("is-invalid");
         }
         break;

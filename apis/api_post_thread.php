@@ -12,7 +12,7 @@ if (!$_POST['thread_question']) {
 }
 /* Compare if the session cookie is the same as the value of the hidden input field */
 if (!isset($_SESSION['csrf']) || !isset($_POST['csrf'])) {
-    header('Location: /forum/You are not validated to send the message. Please log in angain.');
+    header('Location: /forum/You are not validated to send the message. Please log in again.');
     exit();
 }
 if (!$_POST['csrf'] == $_SESSION['csrf']) {
@@ -47,7 +47,7 @@ try {
     $q2->bindValue(':comment_text', openssl_encrypt($plaintext, $alg, $key, 0, $comment_iv));
     $q2->execute();
 
-header('Location: /forum/Your question is saved!');
+    header('Location: /forum/Your question is saved!');
 } catch (PDOException $ex) {
     echo $ex;
 }

@@ -9,20 +9,20 @@ require_once(__DIR__ . './../apis/api_display_events.php');
 ?>
 <main class="admin_main">
     <?php
-        if (isset($display_message)) { ?>
+    if (isset($display_message)) { ?>
     <p class="url_decode admin">
         <?php
-            echo urldecode($display_message);
-        } ?>
+        echo urldecode($display_message);
+    } ?>
     </p>
     <?php
-  //Show add event only if a user is logged in and has the right privilige
-        if (isset($_SESSION['privilige']) && ($_SESSION['privilige'] == '2' ||  $_SESSION['privilige'] == '3')) {?>
-    <section class='add_event_wrapper hide'><?php
-        require_once(__DIR__.'/add_event.php'); ?>
-    </section><?php
-        }
-?>
+        //Show add event only if a user is logged in and has the right privilige
+        if (isset($_SESSION['privilige']) && ($_SESSION['privilige'] == '2')) { ?>
+    <section class='add_event_wrapper hide'>
+        <?php
+                require_once(__DIR__ . '/add_event.php'); ?>
+    </section>
+    <?php } ?>
 
     <section class="events_wrapper">
         <nav class="nav_wrapper">
@@ -76,21 +76,21 @@ require_once(__DIR__ . './../apis/api_display_events.php');
                     onclick="resetFilter()">𝗫</button>
             </nav>
             <?= isset($_SESSION['privilige']) ? ($_SESSION['privilige'] == '2' ?
-        '<button onclick="addEvent()" class="add_event">Add event</button>' : '' ) : ''?>
+                    '<button onclick="addEvent()" class="add_event">Add event</button>' : '') : '' ?>
         </nav>
         <section class="events_wrapper">
             <?php
-        foreach ($events as $event) {
-            //Make sure only event owner and admins can delete events.
-            $isOwner = false;
-            if(isset($_SESSION['uuid'])){
-                $isOwner = $event['uuid'] == $_SESSION['uuid'];
-                if($_SESSION['privilige'] == '3'){
-                    $isOwner = true;
-                }
-            }
-       
-            ?>
+                foreach ($events as $event) {
+                    //Make sure only event owner and admins can delete events.
+                    $isOwner = false;
+                    if (isset($_SESSION['uuid'])) {
+                        $isOwner = $event['uuid'] == $_SESSION['uuid'];
+                        if ($_SESSION['privilige'] == '3') {
+                            $isOwner = true;
+                        }
+                    }
+
+                ?>
             <article class="event">
                 <div class="event_info">
                     <h4 class="event_heading"><?= out($event['event_title']) ?></h4>
@@ -106,22 +106,22 @@ require_once(__DIR__ . './../apis/api_display_events.php');
 
 
                         <!-- /* 
-                        todo: <a href="/events/event/<?=$event['event_id']?>">See event</a> */-->
+                        todo: <a href="/events/event/<?= $event['event_id'] ?>">See event</a> */-->
                     </div>
                 </div>
 
                 <!-- Delete button for owner and admins -->
-                <?= $isOwner ? "<form class='delete_event' method='POST' action='/events/delete/{$event['event_id']}/{$event['uuid']}'><button>Delete</button></form>" : ''?>
-                <img src="/uploads/<?=out($event['event_image'])?>"
+                <?= $isOwner ? "<form class='delete_event' method='POST' action='/events/delete/{$event['event_id']}/{$event['uuid']}'><button>Delete</button></form>" : '' ?>
+                <img src="/uploads/<?= out($event['event_image']) ?>"
                     class="bgImg"
-                    title="<?=out($event['event_image_credits'])?>" />
+                    title="<?= out($event['event_image_credits']) ?>" />
 
             </article>
 
             <?php
-           
-        }
-        ?>
+
+                }
+                ?>
         </section>
     </section>
 </main>

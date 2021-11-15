@@ -31,6 +31,7 @@ if ($password_length < 6 or $password_length > 50) {
 
 try {
   $q = $db->prepare('SELECT * FROM user WHERE email = :user_email LIMIT 1');
+
   $q->bindValue(':user_email', strtolower($_POST['user_email']));
   $q->execute();
   $user = $q->fetch();
@@ -78,7 +79,7 @@ if (hash("sha256", $_POST['password']) . $user['salt'] . $pepper != $user['passw
   }
 } else {
   if ($user['logger'] >= 3 && $seconds < 300) {
-    header('Location: /login/Sorry! Due to too many faulty logins to your account it has been rendered inactive for 5 minutes. Please try again later.');
+    header('Location: /login/Sorry! Due to too many failed logins to your account it has been rendered inactive for 5 minutes. Please try again later.');
     session_destroy();
     exit();
   }
