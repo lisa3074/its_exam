@@ -10,7 +10,7 @@
         name="csrf"
         value=<?= $_SESSION['csrf'] ?>>
 
-    <!-- all data is wrapped in out() before being set as input value, to make sure all html special characters are escaped -->
+    <!-- all data is wrapped in out() before being set as input value, to make sure all html special characters are escaped (avoid XSS) -->
     <div class="flex_inputs">
         <!-- FIRST NAME -->
         <div class="firstname">
@@ -32,6 +32,8 @@
         </div>
 
         <!-- LAST NAME -->
+        <!-- make sure all html special characters are escaped (avoid XSS)-->
+        <?php $lastname = htmlspecialchars($user['lastname']) ?>
         <!-- Only show if user is a person (admin or regular user) -->
         <?= $_SESSION['privilige'] == '1' || $_SESSION['privilige'] == '3' ?
             "<div class='lastname'>
@@ -40,7 +42,7 @@
                     placeholder='Ex. Smith'
                     name='lastname'
                     id='lastname'
-                    value='{$user['lastname']}'
+                    value='$lastname'
                     data-validate='str'
                     data-min='2'
                     data-max='30'

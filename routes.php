@@ -32,7 +32,7 @@ get('/forum/:display_message', function ($display_message) {
 });
 
 get('/admin', function () {
-   require_once(__DIR__ . '/apis/api_display_my_comments.php');
+   //require_once(__DIR__ . '/apis/api_display_my_comments.php');
    require_once(__DIR__ . '/views/admin.php');
 });
 

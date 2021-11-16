@@ -2,8 +2,8 @@
 /* import db */
 require_once(__DIR__ . '/../db.php');
 
-//Set cookie and start session if not started already
-require_once(__DIR__ . './../cookie_config.php');
+/* Set cookie and start session if not started already + make sure user is logged in */
+require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
 
 /* Is logged in user the author of the topic */
 if ($user_id != $_SESSION['uuid'] || $_SESSION['privilige'] == '2') {

@@ -51,6 +51,7 @@ require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
                         <?php if ($isMe) {
                                     echo 'You';
                                 } else {
+                                    /* Use out() to escape special characters (avoid XSS) */
                                     echo out($comment['firstname']) . " ";
                                     echo out($comment['lastname']) . " ";
                                 } ?>
@@ -66,23 +67,22 @@ require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
                                 $decryptKey = "47062c85f9b1a4d27f50717951f58fa0";
                                 $relational_comment;
                                 foreach ($comments as $reply_to_comment) {
+
                                     $relational_comment = $reply['comment_reply_comment_id'];
                                     if ($reply['comment_reply_comment_id'] == $reply_to_comment['comment_id']) {
-                                        $e1 = '<p class="quote"><span class="quote_signs">“ </span>';
-                                        $e2 = openssl_decrypt($reply_to_comment['comment_text'], $alg, $decryptKey, 0, $reply_to_comment['comment_iv']);
-                                        $e3 =  '<span class="quote_signs"> ”</span></p>';
+                                        /* Use htmlspecialchars() to escape special characters (avoid XSS) */
+                                        $text = '<span class="quote_comment">' . htmlspecialchars(openssl_decrypt($reply_to_comment['comment_text'], $alg, $decryptKey, 0, $reply_to_comment['comment_iv'])) . '</span>';
                                     }
-                                }
-                                /* If user is not logged in or the user is an event organizer, don't make clickable */
-                                if (!isset($_SESSION['privilige']) || $_SESSION['privilige'] == '2') {
-                                    echo "<p class='italic' data-comment_id='$relational_comment''>Replied to ";
-                                } else {
-                                    echo "<p class='italic' data-comment_id='$relational_comment' onclick='scrollToPost()''>Replied to ";
-                                }
-                                echo out($reply['firstname']) . ' ';
-                                echo out($reply['lastname']);
-                                echo ':</p>';
-                                echo $e1, out($e2), $e3;
+                                } ?>
+                <!--   If user is not logged in or the user is an event organizer, don't make clickable  -->
+                <p class="italic"
+                    data-comment_id="<?= $relational_comment ?>"
+                    onclick="<?= !isset($_SESSION['privilige']) || $_SESSION['privilige'] == '2' ? '' : 'scrollToPost()' ?>">
+                    <!-- Use htmlspecialchars() to escape special characters (avoid XSS) -->
+                    Replied to: <?= htmlspecialchars($reply['firstname'] . ' ' . $reply['lastname']) ?>
+                </p>
+                <p class='quote'><span class='quote_signs'><?= $text ?></span> <span class='quote_signs'> </span></p>
+                <?php
                             }
                         } ?>
 

@@ -1,8 +1,8 @@
 <?php
 /* import modules */
 require_once(__DIR__ . '/../db.php');
-/* If not logged in go to start page */
-require_once(__DIR__ . './../bridges/bridge_go_to_start.php');
+/* Set cookie and start session if not started already + make sure user is logged in */
+require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
 
 try {
   /* get comments from view */
@@ -11,9 +11,6 @@ try {
                     ORDER BY comment_ts desc');
   $q->bindValue(':uuid', $_SESSION['uuid']);
   $q->execute();
-  if (!$q->rowCount()) {
-    exit();
-  }
   $comments = $q->fetchAll();
   //encrypting with CBC
   $alg = 'AES-128-CBC';

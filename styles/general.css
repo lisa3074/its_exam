@@ -652,6 +652,11 @@ span.close.hide {
   border-bottom: 1px solid rgb(158, 158, 158);
   margin-bottom: 0.5rem;
 }
+.quote_comment {
+  font-style: italic;
+  color: gray;
+  font-size: 0.75rem;
+}
 
 .me .quote {
   border-bottom: 1px solid rgb(216, 216, 216);

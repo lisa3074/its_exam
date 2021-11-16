@@ -1,7 +1,8 @@
 <?php
 /* import db */
 require_once(__DIR__ . '/../db.php');
-require_once(__DIR__ . './../cookie_config.php');
+/* Make sure user is logged in */
+require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
 
 /* Compare if the session cookie is the same as the value of the hidden input field */
 if (!isset($_SESSION['csrf']) || !isset($_POST['csrf'])) {

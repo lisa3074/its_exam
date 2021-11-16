@@ -2,9 +2,6 @@
 /* import db */
 require_once(__DIR__ . '/../db.php');
 
-//start session if not started already
-require_once(__DIR__ . '/../cookie_config.php');
-
 //encrypting with CBC, the algoritm of the encryption
 $alg = 'AES-128-CBC';
 //The iv

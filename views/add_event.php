@@ -8,7 +8,7 @@ require_once(__DIR__ . '/../bridges/bridge_go_to_start.php'); ?>
     class="new_event"
     enctype="multipart/form-data">
 
-    <!-- Check for client side request forgery -->
+    <!-- Check for cross site request forgery -->
     <input type="hidden"
         name="csrf"
         value=<?= $_SESSION['csrf'] ?>>

@@ -1,7 +1,9 @@
 <?php
-/* import module */
+/* import modules */
 require_once(__DIR__ . '/../db.php');
-require_once(__DIR__ . './../cookie_config.php');
+/* Make sure user is logged in */
+require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
+
 
 /* Check if the chosen email already is in the system */
 $q = $db->prepare('SELECT email FROM user WHERE email = :user_email');

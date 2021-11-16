@@ -1,7 +1,6 @@
 <?php
 /* import module */
 require_once(__DIR__ . '/../db.php');
-require_once(__DIR__ . '/../cookie_config.php');
 
 try {
     /* if loggin in user is a regular user or an admin */
@@ -29,6 +28,10 @@ try {
     $q1->bindValue(':user_link', $_POST['link']);
     $q1->bindValue(':uuid', $_SESSION['uuid']);
     $q1->execute();
+    if (!$q->rowCount()) {
+        header('Location: /admin/User was not found.');
+        exit();
+    }
 
     /* Set new session variables */
     $_SESSION['email'] = $_POST['user_email'];

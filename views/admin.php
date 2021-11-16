@@ -2,8 +2,8 @@
 /* Require modules */
 require_once(__DIR__ . '/default_top.php');
 require_once(__DIR__ . '/nav.php');
-require_once(__DIR__ . '/../apis/api_display_my_comments.php');
 require_once(__DIR__ . '/../db.php');
+require_once(__DIR__ . '/../apis/api_display_my_comments.php');
 /* go to start page if not logged in */
 require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
 
@@ -13,14 +13,18 @@ try {
     $q->bindValue(':uuid', $_SESSION['uuid']);
     $q->execute();
     $user = $q->fetch();
-    /* get the topics this user has created in forum */
-    $q1 = $db->prepare('SELECT * FROM thread WHERE thread_owner_id = :uuid LIMIT 1');
-    $q1->bindValue(':uuid', $_SESSION['uuid']);
-    $q1->execute();
-    $threads = $q1->fetchAll();
+    /* get the topics this user has created in forum, if user is admin or regular user*/
+    if ($_SESSION['privilige'] == '1' || $_SESSION['privilige'] == '3') {
+        $q1 = $db->prepare('SELECT * FROM thread WHERE thread_owner_id = :uuid LIMIT 1');
+        $q1->bindValue(':uuid', $_SESSION['uuid']);
+        $q1->execute();
+        $threads = $q1->fetchAll();
+    }
 } catch (PDOException $ex) {
     echo $ex;
-} ?>
+}
+
+?>
 
 <!-- MAIN PAGE -->
 <main class="admin_main <?= $user['privilige'] != '2' ? 'user_admin' : '' ?>">
@@ -30,8 +34,8 @@ try {
         <label for="fileToUpload"
             title="Click to edit your profile picture">
             <img class="previewImg"
-                data-src="/uploads/<?= $user['user_image'] ?>"
-                src="/uploads/<?= $user['user_image'] ?>"></label>
+                data-src="/uploads/<?= out($user['user_image']) ?>"
+                src="/uploads/<?= out($user['user_image']) ?>"></label>
         <div class="icon_wrapper <?= $user['privilige'] == '2' ? '' : 'user_admin' ?>">
             <label class="submit_image hide <?= $user['privilige'] == '2' ? 'organizer' : 'user_admin' ?>"
                 for="submit_image">
@@ -122,7 +126,6 @@ try {
                 <p class="bold"><?= out($thread['thread_name']) ?></p>
                 <p>Asked <?= $thread['thread_time'] ?></p>
             </div>
-            <!--  <button>Mark as answered</button> -->
         </article>
         <?php  }  ?>
     </article>
@@ -147,8 +150,11 @@ try {
                 <p class="bold"><?= out($decrypted_comments[$key]); ?></p>
                 <p>Sent <?= $comment['comment_ts'] ?></p>
             </div>
-            <!-- check if logged in user has also written the comment. If yes make dele button visible -->
-            <?= $isMe ? "<form action='/admin/delete/{$comment['comment_id']}/{$comment['user_id']}' method='POST'><button>Delete</button></form>" : '' ?>
+            <!-- check if logged in user has also written the comment. If yes make dele button visible. avoid CSRF with hidden form-->
+            <?= $isMe ? "<form action='/admin/delete/{$comment['comment_id']}/{$comment['user_id']}' method='POST'>
+                            <input type='hidden' name='csrf' value='{$_SESSION['csrf']}'>
+                            <button>Delete</button>
+                        </form>" : '' ?>
         </article>
         <?php }
         } ?>

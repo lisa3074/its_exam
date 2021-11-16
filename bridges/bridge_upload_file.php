@@ -1,11 +1,6 @@
 <?php
-require_once(__DIR__ . '/../cookie_config.php');
-
-//User is not logged in
-if (!isset($_SESSION['uuid'])) {
-    http_response_code(400);
-    exit();
-}
+/* Set cookie and start session if not started already + make sure user is logged in */
+require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
 
 /* Compare if the session cookie is the same as the value of the hidden input field */
 if (!isset($_SESSION['csrf']) || !isset($_POST['csrf'])) {

@@ -1,9 +1,9 @@
 <?php
 /* import db */
 require_once(__DIR__ . '/../db.php');
+/* Set cookie and start session if not started already + make sure user is logged in */
+require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
 
-//Set cookie and start session if not started already
-require_once(__DIR__ . './../cookie_config.php');
 /* QUESTION */
 if (!isset($_POST['thread_question'])) {
     header('Location: /forum/You need to write something to send it...');

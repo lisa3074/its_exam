@@ -1,6 +1,8 @@
 <?php
 /* import modules */
 require_once(__DIR__ . '/../db.php');
+/* Set cookie and start session if not started already + make sure user is logged in */
+require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
 
 try {
   /* get comments from view that is in a certain thread/topic */

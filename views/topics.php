@@ -5,9 +5,10 @@
         <!-- TOPIC LIST -->
         <?php foreach ($threads as $thread) { ?>
         <!-- If user is not logged in, topics are not clickable -->
+        <!-- Use out() to escape special characters (avoid XSS)-->
         <article class="thread"
             title="<?= !isset($_SESSION['uuid']) ? 'Log in to view the thread' : '' ?>"
-            data-id="<?= $thread['thread_id'] ?>"
+            data-id="<?= out($thread['thread_id']) ?>"
             onclick="<?= !isset($_SESSION['uuid']) ? '' : 'setComments(this)' ?>">
             <p class="bold question no_pointer2"><?= out($thread['thread_name']) ?></p>
             <div class="thread_info no_pointer2">
