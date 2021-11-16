@@ -14,7 +14,7 @@ if (!$_POST['csrf'] == $_SESSION['csrf']) {
   exit();
 }
 
-if ($_SESSION['privilige'] != '2') {
+if ($_SESSION['privilege'] != '2') {
   header('Location: /events/You don\'t have permission to add an event. Please log in again.');
   exit();
 }

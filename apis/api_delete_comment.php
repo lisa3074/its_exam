@@ -6,7 +6,7 @@ require_once(__DIR__ . '/../db.php');
 require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
 
 /* if logged in user is not the comment owner or if the user is an event organizer */
-if ($user_id != $_SESSION['uuid'] || $_SESSION['privilige'] == '2') {
+if ($user_id != $_SESSION['uuid'] || $_SESSION['privilege'] == '2') {
   if (!isset($thread_id)) {
     /* if this api is called from the forum */
     header("Location: /posts/$thread_id/You do not have permission to delete this event");

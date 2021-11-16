@@ -35,7 +35,7 @@
         <!-- make sure all html special characters are escaped (avoid XSS)-->
         <?php $lastname = htmlspecialchars($user['lastname']) ?>
         <!-- Only show if user is a person (admin or regular user) -->
-        <?= $_SESSION['privilige'] == '1' || $_SESSION['privilige'] == '3' ?
+        <?= $_SESSION['privilege'] == '1' || $_SESSION['privilege'] == '3' ?
             "<div class='lastname'>
             <label><p>Last name</p>
                   <input type='text'

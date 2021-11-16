@@ -37,7 +37,7 @@ require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
                         /* If logged in user is the same as comment writer, set to true */
                         $isMe = $comment['user_id'] == $_SESSION['uuid'];
                         /* If logged in user is admin */
-                        $isAdmin = $_SESSION['privilige'] == '3';
+                        $isAdmin = $_SESSION['privilege'] == '3';
                     } ?>
 
             <h1 class="heading"><?= $key === 0 ? 'Question:' : '' ?><?= $key === 1 ? 'Answers:' : '' ?> </h1>
@@ -46,7 +46,7 @@ require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
                     <!-- HEADING -->
                     <h4>
                         <!-- Make only logged in users able to visit other profiles (not event organizers) -->
-                        <?= isset($_SESSION['uuid']) ? ($_SESSION['privilige'] != '2' ? "<a href='/user/$user_id'>" : '<a>') : '<a>' ?>
+                        <?= isset($_SESSION['uuid']) ? ($_SESSION['privilege'] != '2' ? "<a href='/user/$user_id'>" : '<a>') : '<a>' ?>
                         <!-- Is the comment from the logged in user or not -->
                         <?php if ($isMe) {
                                     echo 'You';
@@ -77,7 +77,7 @@ require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
                 <!--   If user is not logged in or the user is an event organizer, don't make clickable  -->
                 <p class="italic"
                     data-comment_id="<?= $relational_comment ?>"
-                    onclick="<?= !isset($_SESSION['privilige']) || $_SESSION['privilige'] == '2' ? '' : 'scrollToPost()' ?>">
+                    onclick="<?= !isset($_SESSION['privilege']) || $_SESSION['privilege'] == '2' ? '' : 'scrollToPost()' ?>">
                     <!-- Use htmlspecialchars() to escape special characters (avoid XSS) -->
                     Replied to: <?= htmlspecialchars($reply['firstname'] . ' ' . $reply['lastname']) ?>
                 </p>
@@ -90,7 +90,7 @@ require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
                 <p class="comment_text <?= $key === 0 ? 'bold' : '' ?>"><?= out($decrypted_comments[$key]); ?></p>
                 <div class="flex no_pad <?= $key == 0 ? 'question' : '' ?>">
                     <!-- Show reply link if: it's not the first question, it's not the logged in users comment, the user is logged in and not an organizer -->
-                    <?= $key == 0 || $isMe || !isset($_SESSION['privilige']) || $_SESSION['privilige'] == '2' ? '' : "<div><button data-id='$user_id' data-comment_id='$comment_id'
+                    <?= $key == 0 || $isMe || !isset($_SESSION['privilege']) || $_SESSION['privilege'] == '2' ? '' : "<div><button data-id='$user_id' data-comment_id='$comment_id'
                     onclick='reply()'>Reply</button></div>" ?>
                     <!-- DELETE BUTTON -> If it's not a question (topic) and user is an admin or comment owner, show delete button -->
                     <?= !$question && $isAdmin || !$question && $isMe ?
@@ -123,7 +123,7 @@ require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
     </section>
 
     <!-- only show form if user is logged in -->
-    <?php if (isset($_SESSION['uuid']) && $_SESSION['privilige'] != '2' && !$thread_done) { ?>
+    <?php if (isset($_SESSION['uuid']) && $_SESSION['privilege'] != '2' && !$thread_done) { ?>
     <!-- the data-validate attribute is a condition in validator.js that is called on submit for frontend validation -->
     <form action="/post/comment/<?= $thread_id ?>"
         method="POST"

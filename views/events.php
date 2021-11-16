@@ -14,8 +14,8 @@ require_once(__DIR__ . './../apis/api_display_events.php');
     } ?>
     </p>
     <?php
-        //Show add event only if a user is logged in and has the right privilige
-        if (isset($_SESSION['privilige']) && ($_SESSION['privilige'] == '2')) { ?>
+        //Show add event only if a user is logged in and has the right privilege
+        if (isset($_SESSION['privilege']) && ($_SESSION['privilege'] == '2')) { ?>
 
     <!-- ADD EVENT MODULE-->
     <section class='add_event_wrapper hide'>
@@ -76,7 +76,7 @@ require_once(__DIR__ . './../apis/api_display_events.php');
                     onclick="resetFilter()">𝗫</button>
             </nav>
             <!-- Show only add event button if user is logged in and has event organizer privilege -->
-            <?= isset($_SESSION['privilige']) ? ($_SESSION['privilige'] == '2' ?
+            <?= isset($_SESSION['privilege']) ? ($_SESSION['privilege'] == '2' ?
                     '<button onclick="addEvent()" class="add_event">Add event</button>' : '') : '' ?>
         </nav>
 
@@ -88,7 +88,7 @@ require_once(__DIR__ . './../apis/api_display_events.php');
                     $hasPrivilege = false;
                     if (isset($_SESSION['uuid'])) {
                         $hasPrivilege = $event['uuid'] == $_SESSION['uuid'];
-                        if ($_SESSION['privilige'] == '3') {
+                        if ($_SESSION['privilege'] == '3') {
                             $hasPrivilege = true;
                         }
                     } ?>

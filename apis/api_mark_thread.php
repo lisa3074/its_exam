@@ -6,7 +6,7 @@ require_once(__DIR__ . '/../db.php');
 require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
 
 /* Is logged in user the author of the topic */
-if ($user_id != $_SESSION['uuid'] || $_SESSION['privilige'] == '2') {
+if ($user_id != $_SESSION['uuid'] || $_SESSION['privilege'] == '2') {
     header("Location: /posts/$thread_id/You do not have permission to mark this topic");
     exit();
 }

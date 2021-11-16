@@ -14,7 +14,7 @@ try {
     $q->execute();
     $user = $q->fetch();
     /* get the topics this user has created in forum, if user is admin or regular user*/
-    if ($_SESSION['privilige'] == '1' || $_SESSION['privilige'] == '3') {
+    if ($_SESSION['privilege'] == '1' || $_SESSION['privilege'] == '3') {
         $q1 = $db->prepare('SELECT * FROM thread WHERE thread_owner_id = :uuid LIMIT 1');
         $q1->bindValue(':uuid', $_SESSION['uuid']);
         $q1->execute();
@@ -27,21 +27,21 @@ try {
 ?>
 
 <!-- MAIN PAGE -->
-<main class="admin_main <?= $user['privilige'] != '2' ? 'user_admin' : '' ?>">
+<main class="admin_main <?= $user['privilege'] != '2' ? 'user_admin' : '' ?>">
 
     <!-- IMAGE PREVIEW AND LABEL FOR FILE INPUT-->
-    <div class="profile_picture <?= $user['privilige'] == '2' ? 'organizer' : 'user_admin' ?>">
+    <div class="profile_picture <?= $user['privilege'] == '2' ? 'organizer' : 'user_admin' ?>">
         <label for="fileToUpload"
             title="Click to edit your profile picture">
             <img class="previewImg"
                 data-src="/uploads/<?= out($user['user_image']) ?>"
                 src="/uploads/<?= out($user['user_image']) ?>"></label>
-        <div class="icon_wrapper <?= $user['privilige'] == '2' ? '' : 'user_admin' ?>">
-            <label class="submit_image hide <?= $user['privilige'] == '2' ? 'organizer' : 'user_admin' ?>"
+        <div class="icon_wrapper <?= $user['privilege'] == '2' ? '' : 'user_admin' ?>">
+            <label class="submit_image hide <?= $user['privilege'] == '2' ? 'organizer' : 'user_admin' ?>"
                 for="submit_image">
                 <div class="save"><img src="/static/images/save_black_24dp.svg"></div>
             </label>
-            <div class="submit_image cancel hide <?= $user['privilige'] == '2' ? 'organizer' : 'user_admin' ?>"
+            <div class="submit_image cancel hide <?= $user['privilege'] == '2' ? 'organizer' : 'user_admin' ?>"
                 data-type="cancel">
                 <img src="/static/images/close_black_24dp.svg">
             </div>
@@ -89,7 +89,7 @@ try {
 
         </p>
         <!-- USER INFO -->
-        <div class="user_info <?= $user['privilige'] == '2' ? 'organizer' : 'user_admin' ?>">
+        <div class="user_info <?= $user['privilege'] == '2' ? 'organizer' : 'user_admin' ?>">
             <div class="flex_heading">
                 <p class="profile_name"><?= out($user['firstname']) ?> <?= out($user['lastname']) ?> </p>
                 <button class="toggle_profile_edit"
@@ -107,7 +107,7 @@ try {
     </article>
 
     <!-- if user is logeed in and user is admin or regular user -->
-    <?php if (isset($_SESSION['uuid']) && ($_SESSION['privilige'] == '1' || $_SESSION['privilige'] == '3')) { ?>
+    <?php if (isset($_SESSION['uuid']) && ($_SESSION['privilege'] == '1' || $_SESSION['privilege'] == '3')) { ?>
     <!-- TOPICS LIST -->
     <article class="user_questions">
         <h3>Active questions in the forum</h3>

@@ -64,7 +64,7 @@ if (hash("sha256", $_POST['password']) . $user['salt'] . $pepper != $user['passw
   $_SESSION['firstname'] = $user['firstname'];
   $_SESSION['lastname'] = $user['lastname'];
   $_SESSION['uuid'] = $user['uuid'];
-  $_SESSION['privilige'] = $user['privilige'];
+  $_SESSION['privilege'] = $user['privilege'];
   //Use this value to compare when posting a comment (hidden input field)
   $_SESSION['csrf'] = $csrf;
   /* Reset faliure log for account */

@@ -6,11 +6,11 @@ require_once(__DIR__ . '/../db.php');
 require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
 
 /* if user is not logged in as admin or regular user */
-if ($_SESSION['privilige'] != '3' || $_SESSION['privilige'] != '1') {
+if ($_SESSION['privilege'] != '3' || $_SESSION['privilege'] != '1') {
     header('Location: /forum/You do not have permission to delete this topic');
 }
 //If logged in user is not the topic owner but is a regulat user
-if ($user_id != $_SESSION['uuid'] && $_SESSION['privilige'] == '1') {
+if ($user_id != $_SESSION['uuid'] && $_SESSION['privilege'] == '1') {
     header('Location: /forum/You do not have permission to delete this topic');
     exit();
 }

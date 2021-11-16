@@ -4,7 +4,7 @@ require_once(__DIR__ . '/../db.php');
 
 try {
     /* if loggin in user is a regular user or an admin */
-    if ($_SESSION['privilige'] == '1' || $_SESSION['privilige'] == '3') {
+    if ($_SESSION['privilege'] == '1' || $_SESSION['privilege'] == '3') {
         $q1 = $db->prepare("UPDATE user 
         SET 
         firstname = :firstname, 
