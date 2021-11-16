@@ -1,7 +1,8 @@
 <?php
 /* import modules */
 require_once(__DIR__ . '/../db.php');
-require_once(__DIR__ . './../cookie_config.php');
+/* If not logged in go to start page */
+require_once(__DIR__ . './../bridges/bridge_go_to_start.php');
 
 try {
   /* get comments from view */

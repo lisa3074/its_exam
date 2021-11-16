@@ -86,8 +86,7 @@ get('/admin/note/:note', function ($note) {
 });
 
 get('/admin/:display_message', function ($display_message) {
-   require_once(__DIR__ . '/bridges/bridge_go_to_start.php');
-   require_once(__DIR__ . '/views/admin.php');
+   require_once(__DIR__ . '/views/admin.php');;
 });
 
 

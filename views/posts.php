@@ -4,8 +4,9 @@ require_once(__DIR__ . '/default_top.php');
 require_once(__DIR__ . '/nav.php');
 require_once(__DIR__ . '/../apis/api_display_comments.php');
 require_once(__DIR__ . '/../db.php');
-require_once(__DIR__ . './../cookie_config.php');
 require_once(__DIR__ . '/../apis/api_get_reply_comment.php');
+/* go to start pae if not logged in */
+require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
 ?>
 
 <main class="admin_main">
