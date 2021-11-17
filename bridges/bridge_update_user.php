@@ -24,7 +24,7 @@ if (!isset($_SESSION['csrf']) || !isset($_POST['csrf'])) {
     header('Location: /admin/You are not validated to edit the profile. Please log in again.');
     exit();
 }
-if (!$_POST['csrf'] == $_SESSION['csrf']) {
+if ($_POST['csrf'] != $_SESSION['csrf']) {
     header('Location: /admin/You are not validated to edit the profile. Please log in again.');
     exit();
 }
@@ -45,7 +45,7 @@ if (
 }
 
 /* If user is not an event organizer */
-if ($_SESSION['privilege'] == '1' || $_SESSION['privilege'] == '2') {
+if ($_SESSION['privilege'] == '1' || $_SESSION['privilege'] == '3') {
     if (!isset($_POST['lastname'])) {
         header('Location: /admin/You need to provide your last name');
         exit();

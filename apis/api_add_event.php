@@ -4,15 +4,6 @@ require_once(__DIR__ . '/../db.php');
 /* Set cookie and start session if not started already + make sure user is logged in */
 require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
 
-/* Compare if the session cookie is the same as the value of the hidden input field */
-if (!isset($_SESSION['csrf']) || !isset($_POST['csrf'])) {
-  header('Location: /events/You don\'t have permission to add an event. Please log in again.');
-  exit();
-}
-if (!$_POST['csrf'] == $_SESSION['csrf']) {
-  header('Location: /events/You don\'t have permission to add an event. Please log in again.');
-  exit();
-}
 
 if ($_SESSION['privilege'] != '2') {
   header('Location: /events/You don\'t have permission to add an event. Please log in again.');

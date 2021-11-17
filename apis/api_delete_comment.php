@@ -9,10 +9,10 @@ require_once(__DIR__ . '/../bridges/bridge_go_to_start.php');
 if ($user_id != $_SESSION['uuid'] || $_SESSION['privilege'] == '2') {
   if (!isset($thread_id)) {
     /* if this api is called from the forum */
-    header("Location: /posts/$thread_id/You do not have permission to delete this event");
+    header("Location: /posts/$thread_id/You do not have permission to delete this comment");
   } else {
     /* if this api is called from the admin page */
-    header("Location: /admin/You do not have permission to delete this event");
+    header("Location: /admin/You do not have permission to delete this comment");
   }
   exit();
 }
@@ -21,7 +21,7 @@ if (!isset($_SESSION['csrf']) || !isset($_POST['csrf'])) {
   header('Location: /admin/You are not validated to edit the profile. Please log in again.');
   exit();
 }
-if (!$_POST['csrf'] == $_SESSION['csrf']) {
+if ($_POST['csrf'] != $_SESSION['csrf']) {
   header('Location: /admin/You are not validated to edit the profile. Please log in again.');
   exit();
 }

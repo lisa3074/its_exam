@@ -9,9 +9,14 @@ if (!isset($_SESSION['csrf']) || !isset($_POST['csrf'])) {
     header("Location: /posts/$thread_id/You do not have permission to write a comment");
     exit();
 }
-if (!$_POST['csrf'] == $_SESSION['csrf']) {
+if ($_POST['csrf'] != $_SESSION['csrf']) {
     header("Location: /posts/$thread_id/You do not have permission to write a comment");
     exit();
+}
+
+/* PRIVILEGE */
+if ($_SESSION['privilege'] != '1' || $_SESSION['privilege'] != '3') {
+    header("Location: /forum/You do not have permission to write comments");
 }
 
 /* COMMENT */

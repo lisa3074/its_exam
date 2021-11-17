@@ -16,7 +16,7 @@ if (!isset($_SESSION['csrf']) || !isset($_POST['csrf'])) {
     header("Location: /posts/$thread_id/You do not have permission to mark this topic");
     exit();
 }
-if (!$_POST['csrf'] == $_SESSION['csrf']) {
+if ($_POST['csrf'] != $_SESSION['csrf']) {
     header("Location: /posts/$thread_id/You do not have permission to mark this topic");
     exit();
 }

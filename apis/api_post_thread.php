@@ -21,7 +21,7 @@ if (!isset($_SESSION['csrf']) || !isset($_POST['csrf'])) {
     header('Location: /forum/You are not validated to send the message. Please log in again.');
     exit();
 }
-if (!$_POST['csrf'] == $_SESSION['csrf']) {
+if ($_POST['csrf'] != $_SESSION['csrf']) {
     header('Location: /forum/You are not validated to send the message. Please log in again.');
     exit();
 }
